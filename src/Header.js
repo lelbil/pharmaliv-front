@@ -15,16 +15,13 @@ const styles = {
     },
     imgContainer: {
         flex: 1,
-        //backgroundColor: "yellow",
     },
     info: {
         flex: 3,
-        //backgroundColor: "pink",
     },
     actions: {
         flex: 2,
-        //backgroundColor: "blue",
-        height: "100%",
+        height: "65%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-around",

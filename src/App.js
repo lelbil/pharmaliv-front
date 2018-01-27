@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './Header'
+import Content from './Content'
 
 const styles = {
     app: {
@@ -35,7 +36,7 @@ class App extends Component {
                     <Header/>
                 </div>
                 <div id="content" style={styles.content}>
-                    CONTENT
+                    <Content/>
                 </div>
             </div>
         </MuiThemeProvider>
