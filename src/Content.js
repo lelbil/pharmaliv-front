@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { LocalPharmacy, Place, AddCircle, PlayCircleFilled } from 'material-ui-icons/'
 import NavigationCard from './NavigationCard'
 
 const styles= {
@@ -34,12 +33,11 @@ class Content extends Component {
     }
 
     render() {
+        const { papers } = this.props
+        console.log(papers.length)
         return (
             <div style={styles.index}>
-                <NavigationCard label="Mes Commandes" icon={<PlayCircleFilled/>}/>
-                <NavigationCard label="Trouver Une Pharmacie" icon={<Place/>}/>
-                <NavigationCard label="Nouvelle Commande" icon={<AddCircle/>}/>
-                <NavigationCard label="Explorer Le Catalogue Des Médicaments" icon={<LocalPharmacy/>}/>
+                {papers.map(paper => <NavigationCard label={paper.label} icon={paper.icon}/>)}
             </div>
         )
     }
