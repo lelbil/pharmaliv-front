@@ -1,0 +1,15 @@
+.navCardPaper {
+    flex: 1;
+    min-width: 40%;
+    margin: 30px;
+    min-height: 200px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.navCardLabel {
+    font-size: 41px;
+}

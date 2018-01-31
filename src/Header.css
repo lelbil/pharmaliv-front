@@ -1,0 +1,27 @@
+.headerIndex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.profilePicture {
+    width: 21vh;
+    height: 21vh;
+    border-radius: 50%;
+}
+
+.imgContainer {
+    flex: 1;
+}
+
+.info {
+    flex: 3;
+}
+
+.actions {
+    flex: 2;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

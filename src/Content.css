@@ -1,0 +1,14 @@
+.contentIndex {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    align-content: center;
+}
+
+.contentPaper {
+    flex: 1;
+    min-width: 40%;
+    margin: 30px;
+    min-height: 200px;
+    cursor: pointer;
+}

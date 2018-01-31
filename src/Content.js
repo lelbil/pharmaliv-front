@@ -1,21 +1,6 @@
 import React, { Component } from 'react'
 import NavigationCard from './NavigationCard'
-
-const styles= {
-    index: {
-        display: "flex",
-        flexWrap: "wrap",
-        height: "100%",
-        alignContent: "center",
-    },
-    paper: {
-        flex: 1,
-        minWidth: "40%",
-        margin: "30px",
-        minHeight: "200px",
-        cursor: "pointer"
-    }
-}
+import './Content.css'
 
 class Content extends Component {
 
@@ -36,8 +21,8 @@ class Content extends Component {
         const { papers } = this.props
         console.log(papers.length)
         return (
-            <div style={styles.index}>
-                {papers.map(paper => <NavigationCard label={paper.label} icon={paper.icon}/>)}
+            <div className="contentIndex">
+                {papers.map(paper => <NavigationCard label={paper.label} icon={paper.icon} class="contentPaper"/>)}
             </div>
         )
     }

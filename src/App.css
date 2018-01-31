@@ -26,3 +26,26 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+}
+
+#header {
+  background-color: green;
+  height: 25vh;
+  border: solid 1px gold;
+  margin: 4px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+#content {
+  height: 75vh;
+  background-color: crimson;
+}
