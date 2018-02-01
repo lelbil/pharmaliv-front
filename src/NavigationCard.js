@@ -23,7 +23,7 @@ class NavigationCard extends Component {
 
     render() {
         return (
-            <Paper id="paper1" onMouseOver={this.onHover} onMouseOut={this.unHover} zDepth={this.state.shadow} className="navCardPaper">
+            <Paper onMouseOver={this.onHover} onMouseOut={this.unHover} zDepth={this.state.shadow} className="navCardPaper">
                 <h1 className="navCardLabel">{this.props.label}</h1>
                 { this.props.icon || <LocalPharmacy/>}
             </Paper>

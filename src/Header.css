@@ -14,14 +14,75 @@
     flex: 1;
 }
 
+.infoActions {
+    flex: 5;
+    display: flex;
+}
+
 .info {
     flex: 3;
 }
 
 .actions {
     flex: 2;
-    height: 65%;
+    height: 25vh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+
+.profileButton {
+    margin-right: 50px;
+}
+
+.notificationsButton {
+    margin-left: 50px;
+}
+
+.dropDownActions {
+    display: none;
+}
+
+@media (max-width: 500px) {
+    .headerIndex {
+        flex-wrap: wrap;
+    }
+
+    .actions {
+        display: none;
+    }
+
+    .profileButton {
+        margin-right: 0px;
+    }
+
+    .notificationsButton {
+        margin-left: 0px;
+    }
+
+    .profilePicture {
+        width: 16vh;
+        height: 20vh;
+        border-radius: 15%;
+        border: solid 3px gold;
+    }
+
+    .infoActions {
+        flex-direction: column;
+    }
+
+    .fullName {
+        font-size: medium;
+    }
+
+    .birthday, .socialSecurityNumber {
+        margin: 0px;
+        font-size: smaller;
+    }
+
+    .dropDownActions {
+        display: block;
+        margin-top: 15px;
+    }
+
 }

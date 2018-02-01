@@ -49,3 +49,9 @@
   height: 75vh;
   background-color: crimson;
 }
+
+@media (max-width: 500px) {
+  #header {
+    /*min-height: 50vh;*/
+  }
+}

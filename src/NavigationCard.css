@@ -13,3 +13,15 @@
 .navCardLabel {
     font-size: 41px;
 }
+
+@media (max-width: 500px) {
+    .navCardPaper {
+        min-width: 50%;
+        margin: 5px;
+        min-height: 15vh;
+    }
+
+    .navCardLabel {
+        font-size: 11px;
+    }
+}

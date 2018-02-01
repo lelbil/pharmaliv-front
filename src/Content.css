@@ -12,3 +12,7 @@
     min-height: 200px;
     cursor: pointer;
 }
+
+@media (max-width: 500px) {
+
+}
