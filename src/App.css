@@ -50,7 +50,7 @@
   background-color: crimson;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 780px) {
   #header {
     /*min-height: 50vh;*/
   }

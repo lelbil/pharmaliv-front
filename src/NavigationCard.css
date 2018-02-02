@@ -14,7 +14,7 @@
     font-size: 41px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 780px) {
     .navCardPaper {
         min-width: 50%;
         margin: 5px;
