@@ -13,7 +13,7 @@ class Content extends Component {
     }
 
     select = id => {
-        this.setState({ selected: id })
+        this.setState({ selected: this.state.selected === id ? null : id })
     }
 
     render() {

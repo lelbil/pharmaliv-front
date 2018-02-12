@@ -20,7 +20,7 @@
 
 .selected {
     background-color: pink;
-    cursor: not-allowed;
+    cursor: zoom-out;
 }
 
 .unselected {
