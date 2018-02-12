@@ -10,8 +10,42 @@
     justify-content: center;
 }
 
+.defaultPaper {
+    min-width: 100%;
+}
+
 .navCardLabel {
-    font-size: 41px;
+    font-size: 25px;
+}
+
+.selected {
+    background-color: pink;
+    cursor: not-allowed;
+}
+
+.unselected {
+    cursor: pointer;
+    height: 60px;
+}
+
+.paperContent > * {
+    margin: 30px;
+}
+
+.paperContent {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divContainer {
+    min-height: 44%; /*TODO: change this So it automatically fills what's left of the screen*/
+}
+
+.selectedPaperContent {
+    background-color: #DDD;
 }
 
 @media (max-width: 780px) {

@@ -8,8 +8,12 @@ class Content extends Component {
         super(props)
 
         this.state = {
-
+            selected: null,
         }
+    }
+
+    select = id => {
+        this.setState({ selected: id })
     }
 
     render() {
@@ -17,7 +21,7 @@ class Content extends Component {
 
         return (
             <div className="contentIndex">
-                {papers.map(paper => <NavigationCard id={paper.id} label={paper.label} icon={paper.icon} class="contentPaper"/>)}
+                {papers.map(paper => <NavigationCard select={this.select} label={paper.label} icon={paper.icon} className="contentPaper" id={paper.id} selected={this.state.selected}/>)}
             </div>
         )
     }
