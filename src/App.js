@@ -9,72 +9,87 @@ import Content from './Content'
 const patientContent = [
     {
         label: "Mes Commandes",
-        icon: <List/>
+        icon: <List/>,
+        id: "mesCmd",
     },
     {
         label: "Trouver Une Pharmacie",
-        icon: <Place/>
+        icon: <Place/>,
+        id: "trvPharma",
     },
     {
         label: "Nouvelle Commande",
-        icon: <AddCircle/>
+        icon: <AddCircle/>,
+        id: "nvlCmd",
     },
     {
         label: "Explorer Le Catalogue Des Médicaments",
-        icon: <LocalPharmacy/>
+        icon: <LocalPharmacy/>,
+        id: "ctlg",
     },
 ]
 
 const deliveryManContent = [
     {
         label: "Commandes Effectuées",
-        icon: <List/>
+        icon: <List/>,
+        id: "histCmd",
     },
     {
         label: "Carte",
-        icon: <Map/>
+        icon: <Map/>,
+        id: "crt",
     },
     {
         label: "Livraison(s) En Cours",
-        icon: <ShoppingCart/>
+        icon: <ShoppingCart/>,
+        id: "liv",
     },
 ]
 
 const doctorContent = [
     {
         label: "Inscrire Un Nouveau Patient",
-        icon: <PersonAdd/>
+        icon: <PersonAdd/>,
+        id: "nvPtn",
     },
     {
         label: "Déjà Commandées",
-        icon: <History/>
+        icon: <History/>,
+        id: "histCmdDoc",
     },
     {
         label: "Nouvelle Commande",
-        icon: <AddCircle/>
+        icon: <AddCircle/>,
+        id: "nvlCmdDoc",
     },
     {
         label: "Mes Patients",
-        icon: <AccountCircle/>
+        icon: <AccountCircle/>,
+        id: "mesPtn",
     },
 ]
 
 const pharmacistContent = [
     {
         label: "Commandes En Cours",
-        icon: <PlayCircleFilled/>
+        icon: <PlayCircleFilled/>,
+        id: "cmdMtn",
     },
     {
         label: "Historique Des Commandes",
-        icon: <History/>
+        icon: <History/>,
+        id: "histCmdPhar",
     },
     {
         label: "Mes Médicaments",
-        icon: <List/>
+        icon: <List/>,
+        id: "mesMed",
     },
     {
         label: "Ajouter Un Nouveau Médicament",
-        icon: <AddCircle/>
+        icon: <AddCircle/>,
+        id: "nvMed",
     },
 ]
 
