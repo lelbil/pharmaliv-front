@@ -41,7 +41,8 @@
 }
 
 .divContainer {
-    min-height: 44%; /*TODO: change this So it automatically fills what's left of the screen*/
+    max-height: 50%; /*TODO: change this So it automatically fills what's left of the screen*/
+    width: 100%;
 }
 
 .selectedPaperContent {

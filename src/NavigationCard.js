@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
 import { LocalPharmacy } from 'material-ui-icons'
 import './NavigationCard.css'
+import './OrdersList'
+import OrdersList from "./OrdersList";
 
 class NavigationCard extends Component {
 
@@ -41,7 +43,7 @@ class NavigationCard extends Component {
                 </Paper>
                 { id === selected &&
                     <div className="divContainer">
-                        <h1>HERE WE SHOULD HAVE CONTENT</h1>
+                        <OrdersList style={{height: "auto", width: "auto"}}/>
                     </div>
                 }
             </React.Fragment>
