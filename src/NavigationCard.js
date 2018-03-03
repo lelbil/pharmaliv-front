@@ -26,6 +26,10 @@ class NavigationCard extends Component {
         this.setState({shadow: 2})
     }
 
+    contentMapping = {
+        ["mesMed"]:  <OrdersList style={{height: "auto", width: "auto"}}/>
+    }
+
     render() {
         const { selected, id } = this.props
 
@@ -35,7 +39,6 @@ class NavigationCard extends Component {
                        className={(selected === null? "navCardPaper" : "defaultPaper " + (id === selected? "" : "un" ) + "selected")
                        }
                 >
-                    {/**TODO: if this is the selected one, add a component having the desired things*/}
                     <div className={"paperContent" + (selected === id? " selectedPaperContent" : "")}>
                         <h1 className="navCardLabel">{this.props.label}</h1>
                         { this.props.icon || <LocalPharmacy/>}
@@ -43,7 +46,7 @@ class NavigationCard extends Component {
                 </Paper>
                 { id === selected &&
                     <div className="divContainer">
-                        <OrdersList style={{height: "auto", width: "auto"}}/>
+                        {this.contentMapping[id]}
                     </div>
                 }
             </React.Fragment>
