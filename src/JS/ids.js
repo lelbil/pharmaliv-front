@@ -1,0 +1,1 @@
+exports.HISTORIQUE_COMMANDE_PHARMACIE = 'histCmdPhar'

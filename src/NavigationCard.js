@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
 import { LocalPharmacy } from 'material-ui-icons'
 import './NavigationCard.css'
-import './OrdersList'
-import OrdersList from "./OrdersList";
+import './NavigationCardContent/OrdersList'
+import ContentMapping from "./NavigationCardContent"
 
 class NavigationCard extends Component {
 
@@ -26,10 +26,6 @@ class NavigationCard extends Component {
         this.setState({shadow: 2})
     }
 
-    contentMapping = {
-        ["mesMed"]:  <OrdersList style={{height: "auto", width: "auto"}}/>
-    }
-
     render() {
         const { selected, id } = this.props
 
@@ -46,7 +42,7 @@ class NavigationCard extends Component {
                 </Paper>
                 { id === selected &&
                     <div className="divContainer">
-                        {this.contentMapping[id]}
+                        {ContentMapping[id]}
                     </div>
                 }
             </React.Fragment>

@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { LocalPharmacy, Place, AddCircle, PlayCircleFilled, List, ShoppingCart, Map, AccountCircle, PersonAdd, History} from 'material-ui-icons/'
 import Header from './Header'
 import Content from './Content'
+import IDs from './JS/ids'
 
 
 const patientContent = [
@@ -79,7 +80,7 @@ const pharmacistContent = [
     {
         label: "Historique Des Commandes",
         icon: <History/>,
-        id: "histCmdPhar",
+        id: IDs.HISTORIQUE_COMMANDE_PHARMACIE,
     },
     {
         label: "Mes Médicaments",
