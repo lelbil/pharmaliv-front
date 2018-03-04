@@ -75,7 +75,7 @@ const pharmacistContent = [
     {
         label: "Commandes En Cours",
         icon: <PlayCircleFilled/>,
-        id: "cmdMtn",
+        id: IDs.COMMANDES_ENCOURS_PHARMACIE,
     },
     {
         label: "Historique Des Commandes",

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactTable from "react-table";
 import moment from 'moment'
 import "react-table/react-table.css";
+import RaisedButton from 'material-ui/RaisedButton'
 
 
 class OrdersList extends Component {
@@ -86,8 +87,21 @@ class OrdersList extends Component {
                         props.value
                 )
             },
-
         ]
+
+        if (this.props.enCours) {
+            columns.push({
+                Header: 'Actions',
+                accessor: 'actions',
+                Cell: () => ( //Todo: pass Order id in props so you can call functions on it
+                    <span>
+                        <RaisedButton label="Confirmer" primary={true}/>
+                        <RaisedButton label="Annuler" secondary={true}/>
+                    </span>
+                )
+            })
+        }
+
         return (
             <div style={{backgroundColor: "pink", height: "100%", overflow: "scroll",}}>
                 <ReactTable
