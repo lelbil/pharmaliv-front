@@ -85,7 +85,7 @@ const pharmacistContent = [
     {
         label: "Mes Médicaments",
         icon: <List/>,
-        id: "mesMed",
+        id: IDs.MEDICAMENTS_PHARMACIE,
     },
     {
         label: "Ajouter Un Nouveau Médicament",
