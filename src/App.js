@@ -90,7 +90,7 @@ const pharmacistContent = [
     {
         label: "Ajouter Un Nouveau Médicament",
         icon: <AddCircle/>,
-        id: "nvMed",
+        id: IDs.AJOUTER_MEDICAMENT,
     },
 ]
 
