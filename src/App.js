@@ -52,7 +52,7 @@ const doctorContent = [
     {
         label: "Inscrire Un Nouveau Patient",
         icon: <PersonAdd/>,
-        id: "nvPtn",
+        id: IDs.NOUVEAU_PATIENT,
     },
     {
         label: "Déjà Commandées",

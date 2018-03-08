@@ -5,3 +5,4 @@ exports.AJOUTER_MEDICAMENT = 'nvMed'
 
 exports.HISTORIQUE_COMMANDE_MEDECIN = 'histCmdDoc'
 exports.MES_PATIENTS = 'mesPtn'
+exports.NOUVEAU_PATIENT = 'nvPtn'
