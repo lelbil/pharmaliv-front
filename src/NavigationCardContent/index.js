@@ -1,6 +1,7 @@
 import React from 'react'
 import OrdersList from "./OrdersList"
 import DrugList from './DrugsList'
+import PatientsList from './PatientsList'
 import IDs from '../JS/ids'
 import AddDrug from "./AddDrug";
 
@@ -11,6 +12,7 @@ const contentMapping = {
     [IDs.AJOUTER_MEDICAMENT]: <AddDrug style={{height: "auto", width: "auto"}}/>,
 
     [IDs.HISTORIQUE_COMMANDE_MEDECIN]: <OrdersList  style={{height: "auto", width: "auto"}} target="medecin"/>,
+    [IDs.MES_PATIENTS]: <PatientsList style={{height: "auto", width: "auto"}}/>,
 }
 
 export default contentMapping

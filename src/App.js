@@ -67,7 +67,7 @@ const doctorContent = [
     {
         label: "Mes Patients",
         icon: <AccountCircle/>,
-        id: "mesPtn",
+        id: IDs.MES_PATIENTS,
     },
 ]
 
