@@ -57,7 +57,7 @@ const doctorContent = [
     {
         label: "Déjà Commandées",
         icon: <History/>,
-        id: "histCmdDoc",
+        id: IDs.HISTORIQUE_COMMANDE_MEDECIN,
     },
     {
         label: "Nouvelle Commande",
@@ -103,7 +103,7 @@ class App extends Component {
                     <Header/>
                 </div>
                 <div id="content">
-                    <Content papers={pharmacistContent}/>
+                    <Content papers={doctorContent}/>
                 </div>
             </div>
         </MuiThemeProvider>

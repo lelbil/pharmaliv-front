@@ -6,9 +6,11 @@ import AddDrug from "./AddDrug";
 
 const contentMapping = {
     [IDs.HISTORIQUE_COMMANDE_PHARMACIE]:  <OrdersList style={{height: "auto", width: "auto"}}/>,
-    [IDs.COMMANDES_ENCOURS_PHARMACIE]: <OrdersList  style={{height: "auto", width: "auto"}} enCours={true} />,
+    [IDs.COMMANDES_ENCOURS_PHARMACIE]: <OrdersList  style={{height: "auto", width: "auto"}} target="pharmacie" enCours={true} />,
     [IDs.MEDICAMENTS_PHARMACIE]: <DrugList style={{height: "auto", width: "auto"}}/>,
     [IDs.AJOUTER_MEDICAMENT]: <AddDrug style={{height: "auto", width: "auto"}}/>,
+
+    [IDs.HISTORIQUE_COMMANDE_MEDECIN]: <OrdersList  style={{height: "auto", width: "auto"}} target="medecin"/>,
 }
 
 export default contentMapping
