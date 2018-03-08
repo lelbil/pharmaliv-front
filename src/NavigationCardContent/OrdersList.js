@@ -108,7 +108,7 @@ class OrdersList extends Component {
                     data={this.state.data}
                     columns={columns}
                     showPaginationTop={true}
-                    pageSize={5}
+                    defaultPageSize={5}
                     previousText= 'Précedent'
                     nextText= 'Suivant'
                     loadingText= 'Chargement...'
