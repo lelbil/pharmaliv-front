@@ -62,7 +62,7 @@ const doctorContent = [
     {
         label: "Nouvelle Commande",
         icon: <AddCircle/>,
-        id: "nvlCmdDoc",
+        id: IDs.NOUVELLE_COMMANDE_MEDECIN,
     },
     {
         label: "Mes Patients",
