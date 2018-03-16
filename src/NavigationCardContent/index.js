@@ -4,8 +4,9 @@ import DrugList from './DrugsList'
 import PatientsList from './PatientsList'
 import AddPatient from './AddPatient'
 import IDs from '../JS/ids'
-import AddDrug from "./AddDrug";
-import NewOrderDoctor from "./NewOrderDoctor";
+import AddDrug from "./AddDrug"
+import NewOrderDoctor from "./NewOrderDoctor"
+import PatientOrdersList from "./PatientOrdersList"
 
 const contentMapping = {
     [IDs.HISTORIQUE_COMMANDE_PHARMACIE]:  <OrdersList style={{height: "auto", width: "auto"}}/>,
@@ -17,6 +18,8 @@ const contentMapping = {
     [IDs.MES_PATIENTS]: <PatientsList style={{height: "auto", width: "auto"}}/>,
     [IDs.NOUVEAU_PATIENT]: <AddPatient style={{height: "auto", width: "auto"}}/>,
     [IDs.NOUVELLE_COMMANDE_MEDECIN]: <NewOrderDoctor style={{height: "auto", width: "auto"}}/>,
+
+    [IDs.MES_COMMANDES_PATIENT]: <PatientOrdersList style={{height: "auto", width: "auto"}}/>,
 
 }
 

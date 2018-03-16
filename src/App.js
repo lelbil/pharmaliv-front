@@ -11,7 +11,7 @@ const patientContent = [
     {
         label: "Mes Commandes",
         icon: <List/>,
-        id: "mesCmd",
+        id: IDs.MES_COMMANDES_PATIENT,
     },
     {
         label: "Trouver Une Pharmacie",
@@ -103,7 +103,7 @@ class App extends Component {
                     <Header/>
                 </div>
                 <div id="content">
-                    <Content papers={doctorContent}/>
+                    <Content papers={patientContent}/>
                 </div>
             </div>
         </MuiThemeProvider>

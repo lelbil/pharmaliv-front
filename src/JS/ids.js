@@ -7,3 +7,5 @@ exports.HISTORIQUE_COMMANDE_MEDECIN = 'histCmdDoc'
 exports.MES_PATIENTS = 'mesPtn'
 exports.NOUVEAU_PATIENT = 'nvPtn'
 exports.NOUVELLE_COMMANDE_MEDECIN = 'nvlCmdDoc'
+
+exports.MES_COMMANDES_PATIENT = 'mesCmd'
