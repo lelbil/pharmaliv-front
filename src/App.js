@@ -21,7 +21,7 @@ const patientContent = [
     {
         label: "Nouvelle Commande",
         icon: <AddCircle/>,
-        id: "nvlCmd",
+        id: IDs.NOUVELLE_COMMANDE_PATIENT,
     },
     {
         label: "Explorer Le Catalogue Des Médicaments",

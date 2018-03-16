@@ -9,3 +9,4 @@ exports.NOUVEAU_PATIENT = 'nvPtn'
 exports.NOUVELLE_COMMANDE_MEDECIN = 'nvlCmdDoc'
 
 exports.MES_COMMANDES_PATIENT = 'mesCmd'
+exports.NOUVELLE_COMMANDE_PATIENT = 'nvlCmd'

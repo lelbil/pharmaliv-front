@@ -14,8 +14,9 @@ class NewOrderDoctor extends Component {
     render() {
         return (
             <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap", alignItems: "center"}}>
-                <TextField hintText="Nom du patient"/>
-                <TextField hintText="Medicaments (Chaque médicaments dans une nouvelle line)" multiLine={true} rows={4} rowsMax={6}/>
+                {this.props.target === "medecin" && <TextField hintText="Nom du patient"/>}
+                {this.props.target === "patient" && <TextField hintText="Pharmacie"/>}
+                <TextField hintText="Médicaments (Chaque médicaments dans une nouvelle line)" multiLine={true} rows={4} rowsMax={6}/>
                 <RaisedButton label="Commander" primary={true}/>
             </div>
         )
