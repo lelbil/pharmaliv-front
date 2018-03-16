@@ -26,7 +26,7 @@ const patientContent = [
     {
         label: "Explorer Le Catalogue Des Médicaments",
         icon: <LocalPharmacy/>,
-        id: "ctlg",
+        id: IDs.CATALOGUE_MEDICAMENTS,
     },
 ]
 
