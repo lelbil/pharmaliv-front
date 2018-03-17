@@ -24,6 +24,8 @@ const contentMapping = {
     [IDs.NOUVELLE_COMMANDE_PATIENT]: <NewOrder style={{height: "auto", width: "auto"}} target="patient"/>,
     [IDs.CATALOGUE_MEDICAMENTS]: <DrugsCatalog style={{height: "auto", width: "auto"}}/>,
 
+    [IDs.HISTORIQUE_COMMANDE_LIVREUR]: <OrdersList style={{height: "auto", width: "auto"}} target="livreur"/>
+
 }
 
 export default contentMapping

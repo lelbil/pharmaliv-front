@@ -34,7 +34,7 @@ const deliveryManContent = [
     {
         label: "Commandes Effectuées",
         icon: <List/>,
-        id: "histCmd",
+        id: IDs.HISTORIQUE_COMMANDE_LIVREUR,
     },
     {
         label: "Carte",
@@ -103,7 +103,7 @@ class App extends Component {
                     <Header/>
                 </div>
                 <div id="content">
-                    <Content papers={patientContent}/>
+                    <Content papers={deliveryManContent}/>
                 </div>
             </div>
         </MuiThemeProvider>
