@@ -21,36 +21,48 @@ class OrdersList extends Component {
                     nom: 'Steven De Carvalho',
                     address: 'La Tour Eiffel, DA532 - Havana',
                     details: ['ERZ', 'MERZ', 'ERZ'],
+                    pharmacy: 'Pharmacie de Drogues',
+                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
                 },
                 {
                     date: Date.parse('02-18-2018')/1000,
                     nom: 'Steven De Carvalho',
                     address: 'La Tour Eiffel, DA532 - Havana',
                     details: 'ERZ',
+                    pharmacy: 'Pharmacie de Drogues',
+                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
                 },
                 {
                     date:  Date.parse('02-19-2018')/1000,
                     nom: 'Billel De Attatuch',
                     address: 'La Tour Eiffel, DA532 - Havana',
                     details: 'ERZ',
+                    pharmacy: 'Pharmacie de Drogues',
+                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
                 },
                 {
                     date:  Date.parse('03-31-2018')/1000,
                     nom: 'Billel De Attatuch',
                     address: 'La Tour Eiffel, DA532 - Havana',
                     details: 'ERZ',
+                    pharmacy: 'Pharmacie de Drogues',
+                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
                 },
                 {
                     date:  Date.parse('02-27-2018')/1000,
                     nom: 'Steven De Carvalho',
                     address: 'La Tour Eiffel, DA532 - Havana',
                     details: 'ERZ',
+                    pharmacy: 'Pharmacie de Drogues',
+                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
                 },
                 {
                     date:  Date.parse('03-01-2018')/1000,
                     nom: 'Cristiano Ronaldo',
                     address: 'La Tour Eiffel, DA532 - Havana',
                     details: 'ERZ',
+                    pharmacy: 'Pharmacie de Drogues',
+                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
                 },
 
             ])
@@ -88,6 +100,16 @@ class OrdersList extends Component {
                 )
             },
         ]
+        
+        if (this.props.target == "livreur") {
+            columns.push({
+                Header: 'Pharmacie',
+                accessor: 'pharmacy'
+            }, {
+                Header: 'Adresse Pharmacie',
+                accessor: 'pharmacyAddress'
+            })
+        }
 
         if (this.props.enCours) {
             columns.push({
@@ -96,7 +118,7 @@ class OrdersList extends Component {
                 Cell: () => ( //Todo: pass Order id in props so you can call functions on it
                     <span>
                         <RaisedButton label="Confirmer" primary={true}/>
-                        <RaisedButton label="Annuler" secondary={true}/>
+                        {this.props.target === "pharmacie" && <RaisedButton label="Annuler" secondary={true}/>}
                     </span>
                 )
             })

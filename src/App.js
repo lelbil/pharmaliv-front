@@ -44,7 +44,7 @@ const deliveryManContent = [
     {
         label: "Livraison(s) En Cours",
         icon: <ShoppingCart/>,
-        id: "liv",
+        id: IDs.COMMANDES_ENCOURS_LIVREUR,
     },
 ]
 
