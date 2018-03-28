@@ -103,7 +103,7 @@ class App extends Component {
                     <Header/>
                 </div>
                 <div id="content">
-                    <Content papers={deliveryManContent}/>
+                    <Content papers={pharmacistContent}/>
                 </div>
             </div>
         </MuiThemeProvider>
