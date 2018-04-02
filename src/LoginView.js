@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import history from './JS/history'
 
 const style = {
     height: '70vh',
@@ -15,6 +16,13 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
 };
+
+const userContentMapping = {
+    ["medecin"]: "doctorContent",
+    ["pharmacien"]: "pharmacistContent",
+    ["livreur"]: "deliveryManContent",
+    ["patient"]: "patientContent"
+}
 
 /**
  * TODO: This view needs further styling:
@@ -38,9 +46,15 @@ class LoginView extends Component {
         this.setState(obj)
     }
 
-    authenticate() {
-        //TODO
-        alert("Logged in")
+    authenticate = () => {
+        //TODO 1- Call login endpoint. 2- Retrieve user type 3- redirect to /app sending the user type in props
+        console.log("Hello")
+        console.log(this.state.user)
+        const type = userContentMapping[this.state.user]
+
+        if (type) history.push('/app', { type })
+
+        else alert("Login failed") //TODO
     }
 
     render() {

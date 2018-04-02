@@ -5,7 +5,7 @@ import { LocalPharmacy, Place, AddCircle, PlayCircleFilled, List, ShoppingCart, 
 import Header from './Header'
 import Content from './Content'
 import IDs from './JS/ids'
-
+import history from './JS/history'
 
 const patientContent = [
     {
@@ -94,6 +94,13 @@ const pharmacistContent = [
     },
 ]
 
+const contentMapping = {
+    ["patientContent"]: patientContent,
+    ["deliveryManContent"]: deliveryManContent,
+    ["doctorContent"]: doctorContent,
+    ["pharmacistContent"]: pharmacistContent
+}
+
 class App extends Component {
   render() {
     return (
@@ -103,7 +110,7 @@ class App extends Component {
                     <Header/>
                 </div>
                 <div id="content">
-                    <Content papers={pharmacistContent}/>
+                    <Content papers={contentMapping[history.location.state.type]}/>
                 </div>
             </div>
         </MuiThemeProvider>
