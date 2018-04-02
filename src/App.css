@@ -32,11 +32,11 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: grey;
+  background-image: url("http://asterpharmacy.com/wp-content/uploads/2014/07/waseem.jpg");
 }
 
 #header {
-  background-color: green;
+  background-color: rgba(7, 135, 4, 0.6);
   height: 25vh;
   border: solid 1px gold;
   margin: 4px;
@@ -47,7 +47,6 @@
 
 #content {
   height: 75vh;
-  background-color: crimson;
 }
 
 @media (max-width: 780px) {

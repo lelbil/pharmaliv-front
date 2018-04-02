@@ -19,7 +19,6 @@
 }
 
 .selected {
-    background-color: pink;
     cursor: zoom-out;
 }
 

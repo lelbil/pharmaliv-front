@@ -3,7 +3,7 @@ import ReactTable from "react-table";
 import moment from 'moment'
 import "react-table/react-table.css";
 import RaisedButton from 'material-ui/RaisedButton'
-
+import { tableBGColour } from '../JS/constants'
 
 class OrdersList extends Component {
     constructor(props) {
@@ -112,7 +112,7 @@ class OrdersList extends Component {
 
 
         return (
-            <div style={{backgroundColor: "pink", height: "100%", overflow: "scroll",}}>
+            <div style={{backgroundColor: tableBGColour, height: "100%", overflow: "scroll",}}>
                 <ReactTable
                     data={this.state.data}
                     columns={columns}
@@ -125,6 +125,7 @@ class OrdersList extends Component {
                     pageText= 'Page'
                     ofText= 'sur'
                     rowsText= 'lignes'
+                    className="-striped -highlight"
                 />
             </div>
         )
