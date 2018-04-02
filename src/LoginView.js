@@ -1,5 +1,3 @@
-'use strict'
-
 import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from 'material-ui/Paper'
@@ -25,6 +23,26 @@ const style = {
  * 3. Add Pharmaliv's logo (at the top left corner may be?)
  */
 class LoginView extends Component {
+    constructor() {
+        super()
+        this.state = {
+            user: '',
+            pw: '',
+        }
+    }
+
+    change = e => {
+        const { name, value } = e.target
+        const obj = {}
+        obj[name] = value
+        this.setState(obj)
+    }
+
+    authenticate() {
+        //TODO
+        alert("Logged in")
+    }
+
     render() {
         return (
             <MuiThemeProvider>
@@ -32,9 +50,9 @@ class LoginView extends Component {
                     <h1>Connexion</h1>
                     <Divider/>
                     <div style={{ display: "flex", flexDirection: "column", margin: "auto", }}>
-                        <TextField floatingLabelText="Nom d'utilisateur"/>
-                        <TextField floatingLabelText="Mot de Passe"/>
-                        <RaisedButton label="Connexion" primary="true" style={{width: "fit-content", margin: "auto", marginTop:"50px"}}/>
+                        <TextField name="user" onChange={this.change} value={this.state.user} floatingLabelText="Nom d'utilisateur"/>
+                        <TextField name="pw" onChange={this.change} value={this.state.pw} floatingLabelText="Mot de Passe" type="password"/>
+                        <RaisedButton onClick={this.authenticate} label="Connexion" primary="true" style={{width: "fit-content", margin: "auto", marginTop:"50px"}}/>
                     </div>
                     <Divider style={{marginTop: "auto"}}/>
                     <span style={{margin: "20px 0px"}}><a href="#">Mot De Passe Oublié?</a> - <a href="#">Inscrivez-vous</a></span>
