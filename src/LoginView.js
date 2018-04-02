@@ -69,7 +69,7 @@ class LoginView extends Component {
                         <RaisedButton onClick={this.authenticate} label="Connexion" primary="true" style={{width: "fit-content", margin: "auto", marginTop:"50px"}}/>
                     </div>
                     <Divider style={{marginTop: "auto"}}/>
-                    <span style={{margin: "20px 0px"}}><a href="#">Mot De Passe Oublié?</a> - <a href="#">Inscrivez-vous</a></span>
+                    <span style={{margin: "20px 0px"}}><a href="#">Mot De Passe Oublié?</a> - <a href="/register">Inscrivez-vous</a></span>
                 </Paper>
             </MuiThemeProvider>
         )
