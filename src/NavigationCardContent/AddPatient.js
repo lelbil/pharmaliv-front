@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import DatePicker from 'material-ui/DatePicker'
 import Checkbox from 'material-ui/Checkbox'
+import { tableBGColour } from '../JS/constants'
 
 class AddDrug extends Component {
     constructor(props) {
@@ -18,11 +19,11 @@ class AddDrug extends Component {
 
     render() {
         return (
-            <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap", alignItems: "center"}}>
-                <TextField hintText="Nom complet du patient"/>
-                <TextField hintText="Numéro De Sécurité Sociale"/>
-                <TextField hintText="Sexe"/>
-                <DatePicker hintText="Date De Naissance" openToYearSelection={true}/>
+            <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap", alignItems: "center", backgroundColor: tableBGColour}}>
+                <TextField hintStyle={{color: 'white'}} hintText="Nom complet du patient"/>
+                <TextField hintStyle={{color: 'white'}} hintText="Numéro De Sécurité Sociale"/>
+                <TextField hintStyle={{color: 'white'}} hintText="Sexe"/>
+                <DatePicker hintStyle={{color: 'white'}} hintText="Date De Naissance" openToYearSelection={true}/>
                 <div>
                     <Checkbox onCheck={() => {this.check("f")}} checked={this.state.sex === 'f'} label="Femme"/>
                     <Checkbox onCheck={() => {this.check("m")}} checked={this.state.sex === 'm'} label="Homme"/>
