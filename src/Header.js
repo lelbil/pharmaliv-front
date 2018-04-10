@@ -31,7 +31,7 @@ class Header extends Component {
                     </div>
                     <div id="actions" className="actions">
                         <RaisedButton className="profileButton" primary={true} label={profileText}/>
-                        <RaisedButton className="notificationsButton"primary={true} label={notifications}/>
+                        <a href="/"><RaisedButton className="notificationsButton" secondary={true} label={"Déconnexion"}/></a>
                     </div>
                 </div>
             </div>
