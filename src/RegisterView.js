@@ -85,7 +85,7 @@ class RegisterView extends Component {
                             <TextField name="email" onChange={this.change} value={this.state.email} hintText="Courriel (é-mail)"/>
                             <TextField name="tel" onChange={this.change} value={this.state.tel} hintText="Numéro de téléphone"/>
                             {type === "patientContent" && <TextField name="nss" onChange={this.change} value={this.state.nss} hintText="Numéro de Sécurité Sociale"/>}
-                            <RaisedButton onClick={this.signup} label="Inscription" primary="true" style={{width: "fit-content", margin: "auto", marginTop:"20px"}}/>
+                            <RaisedButton onClick={this.signup} label="Inscription" primary={true} style={{width: "fit-content", margin: "auto", marginTop:"20px"}}/>
                         </div>
                     }
                     <Divider style={{marginTop: "auto"}}/>

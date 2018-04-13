@@ -103,6 +103,7 @@ const contentMapping = {
 
 class App extends Component {
   render() {
+      //TODO: if no user type, redirect to /
     return (
         <MuiThemeProvider>
             <div className="App">
@@ -110,7 +111,7 @@ class App extends Component {
                     <Header/>
                 </div>
                 <div id="content">
-                    <Content papers={contentMapping[history.location.state.type]}/>
+                    <Content papers={contentMapping[this.props.type]}/>
                 </div>
             </div>
         </MuiThemeProvider>

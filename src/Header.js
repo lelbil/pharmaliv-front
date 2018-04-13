@@ -4,11 +4,25 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import ArrowDropDownCircle from 'material-ui-icons/ArrowDropDownCircle'
 import './Header.css'
+import history from './JS/history'
+
+import { API_URL } from './JS/constants'
 
 const profileText = "Modifier mes infos"
 const notifications = "0 Notifications"
 
 class Header extends Component {
+    disconnect() {
+        fetch(`${API_URL}/logout`, { credentials: 'include' })
+            .then(response => {
+                if (response.status !== 200) console.log('Received an unexpected response from API when trying to login')
+                history.push('/') //This will redirect the user to the home page even if the logging out failed. So it's offering a degraded service but at least no errors
+            })
+            .catch(error => {
+                console.log('ERROR WHEN CALLING LOGOUT ENDPOINT', error)
+            })
+    }
+
     render() {
         return (
             <div className="headerIndex">
@@ -31,7 +45,7 @@ class Header extends Component {
                     </div>
                     <div id="actions" className="actions">
                         <RaisedButton className="profileButton" primary={true} label={profileText}/>
-                        <a href="/"><RaisedButton className="notificationsButton" secondary={true} label={"Déconnexion"}/></a>
+                        <RaisedButton className="notificationsButton" secondary={true} onClick={this.disconnect} label={"Déconnexion"}/>
                     </div>
                 </div>
             </div>
