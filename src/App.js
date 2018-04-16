@@ -5,7 +5,6 @@ import { LocalPharmacy, Place, AddCircle, PlayCircleFilled, List, ShoppingCart, 
 import Header from './Header'
 import Content from './Content'
 import IDs from './JS/ids'
-import history from './JS/history'
 
 const patientContent = [
     {

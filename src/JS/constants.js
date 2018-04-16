@@ -7,4 +7,4 @@ exports.USER_TYPES = [exports.PATIENT, exports.DOCTOR, exports.DELIVERY_MAN, exp
 
 exports.tableBGColour = "rgba(255,182,193,0.85)"
 
-exports.API_URL = process.env.REACT_APP_API_URI || "http://localhost:3005"
+exports.API_URL = process.env.REACT_APP_API_URI || "http://localhost:3001"

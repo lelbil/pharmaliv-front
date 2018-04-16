@@ -42,10 +42,14 @@ class LoginView extends Component {
     }
 
     authenticate = () => {
-        fetch(`${API_URL}/login`, { method: 'POST', credentials: 'include',})
+        const body = {
+            user: this.state.user,
+            password: this.state.pw
+        }
+
+        fetch(`${API_URL}/login`, { method: 'POST', credentials: 'include', body, })
             .then(response => response.json())
-            .then(data => {
-                console.log('AUTH', data.type)
+            .then(() => {
                 history.push('/')
             })
             .catch(error => {
