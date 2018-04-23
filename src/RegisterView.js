@@ -41,6 +41,12 @@ class RegisterView extends Component {
         this.setState(obj)
     }
 
+    changeDate = (event, dob) => {
+        this.setState({
+            dob
+        })
+    }
+
     signup = () => {
         //TODO 1- Call register endpoint. 2- redirect to /app sending the user type in props
 
@@ -80,7 +86,7 @@ class RegisterView extends Component {
                             {type === "pharmacistContent" && <TextField name="pharmaName" onChange={this.change} value={this.state.pharmaName} hintText="Nom de la Pharmacie"/> }
                             {type === "pharmacistContent" && <TextField name="siren" onChange={this.change} value={this.state.siren} hintText="SIREN"/> }
                             {type === "deliveryManContent" && <TextField name="deliveryCompany" onChange={this.change} value={this.state.deliveryCompany} hintText="Npm de la Société de Livraison"/> }
-                            {type === "patientContent" && <DatePicker name="dob" onChange={this.change} hintText="Date De Naissance" openToYearSelection={true} autoOk={true} minDate={new Date('01-01-1900')} maxDate={new Date('01-01-2005')}/>}
+                            {type === "patientContent" && <DatePicker onChange={this.changeDate} hintText="Date De Naissance" openToYearSelection={true} autoOk={true} minDate={new Date('01-01-1900')} maxDate={new Date('01-01-2005')}/>}
                             <TextField name="address" onChange={this.change} value={this.state.address} hintText="Adresse Complète"/>
                             <TextField name="email" onChange={this.change} value={this.state.email} hintText="Courriel (é-mail)"/>
                             <TextField name="tel" onChange={this.change} value={this.state.tel} hintText="Numéro de téléphone"/>
