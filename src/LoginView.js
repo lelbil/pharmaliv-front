@@ -42,12 +42,19 @@ class LoginView extends Component {
     }
 
     authenticate = () => {
-        const body = {
+        const body = JSON.stringify({
             user: this.state.user,
             password: this.state.pw
-        }
-
-        fetch(`${API_URL}/login`, { method: 'POST', credentials: 'include', body, })
+        })
+//TODO: print error when login fails (wrong user/password)
+        fetch(`${API_URL}/login`, {
+            method: 'POST',
+            credentials: 'include',
+            body,
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },})
             .then(response => response.json())
             .then(() => {
                 history.push('/')

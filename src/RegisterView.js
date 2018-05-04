@@ -7,6 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import DatePicker from 'material-ui/DatePicker'
 import history from './JS/history'
 
+import { API_URL } from './JS/constants'
+
 const style = {
     height: '70vh',
     width: '70vh',
@@ -30,7 +32,7 @@ class RegisterView extends Component {
         this.state = {
             type: null,
             user: '',
-            pw: '',
+            password: '',
         }
     }
 
@@ -50,11 +52,24 @@ class RegisterView extends Component {
     signup = () => {
         //TODO 1- Call register endpoint. 2- redirect to /app sending the user type in props
 
-        const { type } = this.state
+        const body = JSON.stringify(this.state)
 
-        if (type) history.push('/app', { type })
-
-        else alert("Signup failed") //TODO
+        fetch(`${API_URL}/signup`, {
+            method: 'POST',
+            credentials: 'include',
+            body,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(() => {
+                history.push('/')
+            })
+            .catch(error => {
+                console.log("ERROR", error)
+            })
     }
 
     chooseType(type){
@@ -80,7 +95,7 @@ class RegisterView extends Component {
                     { type &&
                         <div style={{ display: "flex", flexDirection: "column", margin: "auto", overflow: "scroll"}}>
                             <TextField name="user" onChange={this.change} value={this.state.user} hintText="Nom d'utilisateur"/>
-                            <TextField name="pw" onChange={this.change} value={this.state.pw} hintText="Mot de Passe" type="password"/>
+                            <TextField name="password" onChange={this.change} value={this.state.password} hintText="Mot de Passe" type="password"/>
                             {type !== "pharmacistContent" && <TextField name="fname" onChange={this.change} value={this.state.fname} hintText="Prénom"/> }
                             {type !== "pharmacistContent" && <TextField name="lname" onChange={this.change} value={this.state.lname} hintText="Nom"/> }
                             {type === "pharmacistContent" && <TextField name="pharmaName" onChange={this.change} value={this.state.pharmaName} hintText="Nom de la Pharmacie"/> }
