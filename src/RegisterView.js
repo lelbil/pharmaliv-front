@@ -51,7 +51,7 @@ class RegisterView extends Component {
 
     signup = () => {
         //TODO 1- Call register endpoint. 2- redirect to /app sending the user type in props
-
+console.log('Calling Singup function..')
         const body = JSON.stringify(this.state)
 
         fetch(`${API_URL}/signup`, {
@@ -63,9 +63,12 @@ class RegisterView extends Component {
                 'Content-Type': 'application/json',
             },
         })
-            .then(response => response.json())
+            .then(response => {
+                console.log('RESPONSE WAS: ', response)
+                response.json()
+            })
             .then(() => {
-                history.push('/')
+                //history.push('/')
             })
             .catch(error => {
                 console.log("ERROR", error)
