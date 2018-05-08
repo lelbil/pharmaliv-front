@@ -34,6 +34,12 @@ class LoginView extends Component {
         }
     }
 
+    handleKeyPress = event => {
+        if(event.key === 'Enter'){
+            this.authenticate()
+        }
+    }
+
     change = e => {
         const { name, value } = e.target
         const obj = {}
@@ -71,8 +77,8 @@ class LoginView extends Component {
                     <h1>Connexion</h1>
                     <Divider/>
                     <div style={{ display: "flex", flexDirection: "column", margin: "auto", }}>
-                        <TextField name="user" onChange={this.change} value={this.state.user} floatingLabelText="Nom d'utilisateur"/>
-                        <TextField name="pw" onChange={this.change} value={this.state.pw} floatingLabelText="Mot de Passe" type="password"/>
+                        <TextField onKeyPress={this.handleKeyPress} name="user" onChange={this.change} value={this.state.user} floatingLabelText="Nom d'utilisateur"/>
+                        <TextField onKeyPress={this.handleKeyPress} name="pw" onChange={this.change} value={this.state.pw} floatingLabelText="Mot de Passe" type="password"/>
                         <RaisedButton onClick={this.authenticate} label="Connexion" primary={true} style={{width: "fit-content", margin: "auto", marginTop:"50px"}}/>
                     </div>
                     <Divider style={{marginTop: "auto"}}/>
