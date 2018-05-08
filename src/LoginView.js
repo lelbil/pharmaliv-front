@@ -6,6 +6,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import history from './JS/history'
 
+import { API_URL } from './JS/constants'
+
 const style = {
     height: '70vh',
     width: '70vh',
@@ -15,13 +17,6 @@ const style = {
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
-};
-
-const userContentMapping = {
-    ["medecin"]: "doctorContent",
-    ["pharmacien"]: "pharmacistContent",
-    ["livreur"]: "deliveryManContent",
-    ["patient"]: "patientContent"
 }
 
 /**
@@ -47,14 +42,26 @@ class LoginView extends Component {
     }
 
     authenticate = () => {
-        //TODO 1- Call login endpoint. 2- Retrieve user type 3- redirect to /app sending the user type in props
-        console.log("Hello")
-        console.log(this.state.user)
-        const type = userContentMapping[this.state.user]
-
-        if (type) history.push('/app', { type })
-
-        else alert("Login failed") //TODO
+        const body = JSON.stringify({
+            user: this.state.user,
+            password: this.state.pw
+        })
+//TODO: print error when login fails (wrong user/password)
+        fetch(`${API_URL}/login`, {
+            method: 'POST',
+            credentials: 'include',
+            body,
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },})
+            .then(response => response.json())
+            .then(() => {
+                history.push('/')
+            })
+            .catch(error => {
+                console.log("ERROR", error)
+            })
     }
 
     render() {
@@ -66,7 +73,7 @@ class LoginView extends Component {
                     <div style={{ display: "flex", flexDirection: "column", margin: "auto", }}>
                         <TextField name="user" onChange={this.change} value={this.state.user} floatingLabelText="Nom d'utilisateur"/>
                         <TextField name="pw" onChange={this.change} value={this.state.pw} floatingLabelText="Mot de Passe" type="password"/>
-                        <RaisedButton onClick={this.authenticate} label="Connexion" primary="true" style={{width: "fit-content", margin: "auto", marginTop:"50px"}}/>
+                        <RaisedButton onClick={this.authenticate} label="Connexion" primary={true} style={{width: "fit-content", margin: "auto", marginTop:"50px"}}/>
                     </div>
                     <Divider style={{marginTop: "auto"}}/>
                     <span style={{margin: "20px 0px"}}><a href="#">Mot De Passe Oublié?</a> - <a href="/register">Inscrivez-vous</a></span>
