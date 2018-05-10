@@ -50,9 +50,9 @@ class RegisterView extends Component {
     }
 
     signup = () => {
-        //TODO 1- Call register endpoint. 2- redirect to /app sending the user type in props
-
-        const body = JSON.stringify(this.state)
+        const body = Object.assign({
+            profilePic: document.getElementById("profilepic"),
+        }, JSON.stringify(this.state))
 
         fetch(`${API_URL}/signup`, {
             method: 'POST',
@@ -96,6 +96,7 @@ class RegisterView extends Component {
                         <div style={{ display: "flex", flexDirection: "column", margin: "auto", overflow: "scroll"}}>
                             <TextField name="user" onChange={this.change} value={this.state.user} hintText="Nom d'utilisateur"/>
                             <TextField name="password" onChange={this.change} value={this.state.password} hintText="Mot de Passe" type="password"/>
+                            {type === "patientContent" && <div><span>Photo de profil: &nbsp;&nbsp;</span><input type="file" id="profilepic"/></div>}
                             {type !== "pharmacistContent" && <TextField name="fname" onChange={this.change} value={this.state.fname} hintText="Prénom"/> }
                             {type !== "pharmacistContent" && <TextField name="lname" onChange={this.change} value={this.state.lname} hintText="Nom"/> }
                             {type === "pharmacistContent" && <TextField name="pharmaName" onChange={this.change} value={this.state.pharmaName} hintText="Nom de la Pharmacie"/> }
