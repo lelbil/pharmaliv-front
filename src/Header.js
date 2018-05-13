@@ -24,16 +24,18 @@ class Header extends Component {
     }
 
     render() {
+        const session = this.props.sessionInfo
         return (
             <div className="headerIndex">
                 <div className="imgContainer">
-                    <img className="profilePicture" id="profilePicture" alt="c'est toi" src="https://assets.entrepreneur.com/content/3x2/1300/20150406145944-dos-donts-taking-perfect-linkedin-profile-picture-selfie-mobile-camera-2.jpeg"/>
+                    <img className="profilePicture" id="profilePicture" alt="c'est toi" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"/>
                 </div>
                 <div className="infoActions">
                     <div id="basicInfo" className="info">
-                        <h1 className="basicInfo fullName">ATTOUCHI Billel</h1>
-                        <h4 className="basicInfo birthday">17/06/1996</h4>
-                        <h3 className="basicInfo socialSecurityNumber">1 96 78 54 997 456 92</h3>
+                        <h1 className="basicInfo fullName">{session.prenom && session.nom && session.prenom + " " + session.nom}</h1>
+                        <h1 className="basicInfo denomination">{session.denomination}</h1>
+                        <h3 className="basicInfo socialSecurityNumber">{session.nss ? `Numéro de Sécurité Sociale: ${session.nss}` : null}</h3>
+                        <h3 className="basicInfo siren">{session.siren ? `Siren: ${session.siren}` : null}</h3>
                     </div>
                     <div className="dropDownActions">
                         <IconMenu

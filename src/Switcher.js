@@ -11,10 +11,11 @@ let type = false
 class Switcher extends Component {
 
     componentDidMount() {
-        fetch(`${API_URL}/type`, {credentials: 'include'}).then(response => response.json())
+        fetch(`${API_URL}/session`, {credentials: 'include'}).then(response => response.json())
             .then(data => {
-                console.log('TYPE', data.type)
                 type = data.type
+                this.sessionInfo = data
+
                 this.forceUpdate()
             })
             .catch(error => {
@@ -27,12 +28,11 @@ class Switcher extends Component {
             return (
                 <App
                     type={type}
+                    sessionInfo={this.sessionInfo}
                     {...props}
                 />
             );
         }
-
-        console.log('In render', type)
 
         return (
             <Switch>

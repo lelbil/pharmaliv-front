@@ -50,9 +50,8 @@ class RegisterView extends Component {
     }
 
     signup = () => {
-        const body = Object.assign({
-            profilePic: document.getElementById("profilepic"),
-        }, JSON.stringify(this.state))
+        //TODO: need to add profile picture to the body when I figure out how to handle it
+        const body = JSON.stringify(this.state)
 
         fetch(`${API_URL}/signup`, {
             method: 'POST',

@@ -107,7 +107,7 @@ class App extends Component {
         <MuiThemeProvider>
             <div className="App">
                 <div id="header">
-                    <Header/>
+                    <Header sessionInfo={this.props.sessionInfo}/>
                 </div>
                 <div id="content">
                     <Content papers={contentMapping[this.props.type]}/>
