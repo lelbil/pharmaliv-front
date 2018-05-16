@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {GridList, GridTile} from 'material-ui/GridList'
 import { AddShoppingCart } from 'material-ui-icons'
 import { IconButton } from 'material-ui'
+import { Snackbar } from 'material-ui'
 
 import { filtresProduit } from '../JS/constants'
 import { includes, eliminate } from '../JS/utils'
@@ -69,7 +70,9 @@ class DrugsCatalog extends Component {
             selectedFilters : [
                 "MEDICAMENTS"
             ],
-            medicaments: tilesData
+            medicaments: tilesData,
+            snackbarOrdonnance: false,
+            snackbarAddToCart: false,
         }
     }
 
@@ -85,6 +88,39 @@ class DrugsCatalog extends Component {
                 selectedFilters: eliminate(this.state.selectedFilters, indexOfFilter)
             })
         }
+    }
+
+    notAllowedSnackbar = () => {
+        this.setState({
+            snackbarOrdonnance: true,
+        });
+    }
+
+    closeNotAllowedSnackbar = () => {
+        this.setState({
+            snackbarOrdonnance: false,
+        });
+    }
+
+    addToCartSnackbar = () => {
+        this.setState({
+            snackbarAddToCart: true,
+        });
+    }
+
+    closeAddToCartSnackbar = () => {
+        this.setState({
+            snackbarAddToCart: false,
+        });
+    }
+
+    addToCart = medicament => {
+        if (medicament.ordonnance) {
+            this.notAllowedSnackbar()
+            return
+        }
+        //TODO: add medicament to cart ( medicament.id, quantity => call to API => user's cart )
+        this.addToCartSnackbar()
     }
 
     render() {
@@ -111,7 +147,13 @@ class DrugsCatalog extends Component {
                                         key={medicament.imgLink}
                                         title={medicament.nom}
                                         subtitle={<b style={{ color: "#bae584" }}>{medicament.prix.toFixed(2)}€</b>}
-                                        actionIcon={<IconButton><AddShoppingCart color="green" /></IconButton>}
+                                        actionIcon={
+                                            <div style={{display: "flex", alignItems: "center"}}>
+                                                {!medicament.ordonnance && <input type="number" name="quantity" min="1" max="20" defaultValue={1}/>}
+                                                <IconButton onClick={() => { this.addToCart(medicament) }} className={medicament.ordonnance ? "ordonnance" : ""}>
+                                                    <AddShoppingCart className={medicament.ordonnance ? "ordonnance" : ""} disabled={true} color={medicament.ordonnance ? "grey" : "green"}/>
+                                                </IconButton>
+                                            </div>}
                                     >
                                         <img src={medicament.imgLink} />
                                     </GridTile>
@@ -120,6 +162,22 @@ class DrugsCatalog extends Component {
                         }
                     </GridList>
                 </div>
+
+                <Snackbar
+                    open={this.state.snackbarOrdonnance}
+                    message="Ordonnance obligatoire!"
+                    autoHideDuration={2000}
+                    onRequestClose={this.closeNotAllowedSnackbar}
+                />
+
+                <Snackbar
+                    open={this.state.snackbarAddToCart}
+                    message="Médicament ajouté au panier"
+                    autoHideDuration={2000}
+                    onRequestClose={this.closeAddToCartSnackbar}
+                />
+
+
             </div>
         )
     }
