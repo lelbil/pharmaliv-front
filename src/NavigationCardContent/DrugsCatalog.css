@@ -1,0 +1,48 @@
+
+.bodyCatalogue {
+    margin: 0px 20px auto;
+}
+
+ul.filtreContainer {
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    clear: both;
+    display: table;
+}
+
+
+.filter {
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #bae584;
+    background-color: #8ec746;
+    cursor: pointer;
+}
+
+.filtreContainer li a {
+    padding: 0 10px;
+    display: table-cell;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+    text-transform: uppercase;
+    height: 50px;
+    vertical-align: middle;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+
+.selectedFilter {
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #bae584;
+    background-color: cornflowerblue;
+    cursor: pointer;
+}
+.filter:hover {
+    background-color: #00a200;
+}
