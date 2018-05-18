@@ -90,8 +90,28 @@ class DrugsCatalog extends Component {
             this.notAllowedSnackbar()
             return
         }
-        //TODO: add medicament to cart ( medicament.id, quantity => call to API => user's cart )
-        this.addToCartSnackbar()
+
+        const body = JSON.stringify({
+            quantite: document.getElementById(`quantite${medicament.id}`).value,
+            medicamentId: medicament.id,
+        })
+
+        fetch(`${API_URL}/addToCart`, {
+            method: 'POST',
+            credentials: 'include',
+            body,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (response.status === 201) this.addToCartSnackbar()
+                else { console.log('ERROR WHILE ADDING ITEM TO CART') }
+            })
+            .catch(error => {
+                console.log("ERROR", error)
+            })
     }
 
     render() {
@@ -121,7 +141,7 @@ class DrugsCatalog extends Component {
                                         subtitle={<b style={{ color: "#bae584" }}>{parseFloat(medicament.prix).toFixed(2)}€</b>}
                                         actionIcon={
                                             <div style={{display: "flex", alignItems: "center"}}>
-                                                {!medicament.ordonnance && <input type="number" name="quantity" min="1" max="20" defaultValue={1}/>}
+                                                {!medicament.ordonnance && <input id={`quantite${medicament.id}`} type="number" name="quantity" min="1" max="20" defaultValue={1}/>}
                                                 <IconButton onClick={() => { this.addToCart(medicament) }} className={medicament.ordonnance ? "ordonnance" : ""}>
                                                     <AddShoppingCart className={medicament.ordonnance ? "ordonnance" : ""} disabled={true} color={medicament.ordonnance ? "grey" : "green"}/>
                                                 </IconButton>
