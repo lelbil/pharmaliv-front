@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { tableBGColour } from '../JS/constants'
+import { tableBGColour, API_URL } from '../JS/constants'
 
 
 class OrdersList extends Component {
@@ -12,74 +12,14 @@ class OrdersList extends Component {
         }
     }
 
-    getOrders () {
-        return new Promise((resolve, reject) => {
-            setTimeout(resolve, 100, [
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-                {
-                    nom: 'Doliprane 100mg',
-                    type: 'Comprimés',
-                    contenu: '8 comprimés',
-                    inventaire: '253',
-                    remarques: 'Aucune'
-                },
-
-            ])
-        })
-    }
-
     componentDidMount() {
-        this.getOrders().then(
-            data => this.setState({ data })
-        )
+        fetch(`${API_URL}/mesMedicaments`, {credentials: 'include'}).then(response => response.json())
+            .then(data => {console.log('RECEIVED', data)
+                this.setState({ data })
+            })
+            .catch(error => {
+                console.log('ERROR', error)
+            })
     }
 
     render() {
@@ -88,20 +28,23 @@ class OrdersList extends Component {
                 accessor: 'nom',
             },
             {
-                Header: 'Type',
-                accessor: 'type',
+                Header: 'Catégorie',
+                accessor: 'categorie',
             },
             {
-                Header: 'Volume/Poids/Nombre',
-                accessor: 'contenu',
+                Header: 'Ordonnance',
+                accessor: 'ordonnance',
+                Cell: props => props.value ? "Obligatoire" : "Pas besoin"
             },
             {
                 Header: 'Inventaire',
                 accessor: 'inventaire',
             },
             {
-                Header: 'Remarques',
-                accessor: 'remarques',
+                Header: 'Prix',
+                accessor: 'prix',
+                Cell: row => `${parseFloat(row.value).toFixed(2)} €`,
+                sortMethod: (a, b) => (parseFloat(a) > parseFloat(b))? 1 : -1,
             },
         ]
 

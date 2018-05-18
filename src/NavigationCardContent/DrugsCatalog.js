@@ -118,7 +118,7 @@ class DrugsCatalog extends Component {
                                     return <GridTile
                                         key={medicament.imgLink}
                                         title={medicament.nom}
-                                        subtitle={<b style={{ color: "#bae584" }}>{parseInt(medicament.prix).toFixed(2)}€</b>}
+                                        subtitle={<b style={{ color: "#bae584" }}>{parseFloat(medicament.prix).toFixed(2)}€</b>}
                                         actionIcon={
                                             <div style={{display: "flex", alignItems: "center"}}>
                                                 {!medicament.ordonnance && <input type="number" name="quantity" min="1" max="20" defaultValue={1}/>}
