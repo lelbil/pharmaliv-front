@@ -4,7 +4,7 @@ import { AddShoppingCart } from 'material-ui-icons'
 import { IconButton } from 'material-ui'
 import { Snackbar } from 'material-ui'
 
-import { filtresProduit } from '../JS/constants'
+import { filtresProduit, API_URL } from '../JS/constants'
 import { includes, eliminate } from '../JS/utils'
 import './DrugsCatalog.css'
 
@@ -23,45 +23,6 @@ const styles = {
     },
 }
 
-const tilesData = [
-    {
-        id: 1,
-        imgLink: 'https://www.pharmarket.com/media/fr_FR3573577/f1200xf1200/doliprane-tabs-1000mg-8-comprimes-f1200-f1200.png',
-        nom: 'Doliprane',
-        prix: 2.4,
-        description: 'Paracetamol, also known as acetaminophen or APAP, is a medicine used to treat pain and fever. It is typically used for mild to moderate pain relief. Evidence for its use to relieve fever in children is mixed',
-        ordonnance: false,
-        categorie: 'MEDICAMENTS'
-    },
-    {
-        id: 2,
-        imgLink: 'https://rukminim1.flixcart.com/image/1408/1408/j6wi0sw0/protein-supplement/v/p/p/on0028-optimum-nutrition-original-imaewphvd8muxygx.jpeg?q=90',
-        nom: 'GOLD STANDARD 100% WHEY PROTEIN',
-        prix: 59.9,
-        description: 'Whey protein is a mixture of globular proteins isolated from whey, the liquid material created as a by-product of cheese production. Whey protein is commonly marketed as a dietary supplement, and various health claims have been attributed to it in the alternative medicine community.',
-        ordonnance: false,
-        categorie: 'COMPLEMENTS_ALIMENTAIRES'
-    },
-    {
-        id: 3,
-        imgLink: 'https://s1.thcdn.com/productimg/600/600/10797926-2074366927376922.jpg',
-        nom: 'IMPACT WHEY PROTEIN 250G',
-        prix: 6.99,
-        description: 'Whey protein is a mixture of globular proteins isolated from whey, the liquid material created as a by-product of cheese production. Whey protein is commonly marketed as a dietary supplement, and various health claims have been attributed to it in the alternative medicine community.',
-        ordonnance: false,
-        categorie: 'COMPLEMENTS_ALIMENTAIRES'
-    },
-    {
-        id: 4,
-        imgLink: 'https://posomed.fr/img/products/prod_46184-1-large.jpg',
-        nom: 'FLUOXETINE BIOGARAN 20mg',
-        prix: 3.24,
-        description: 'Un épisode dépressif modéré à sévère qui ne répond pas à une prise en charge psychothérapeutique d\'au moins 4 à 6 séances. Ce traitement antidépresseur ne devrait être proposé aux enfants et adolescents qu\'en association avec une prise en charge psychothérapeutique.',
-        ordonnance: true,
-        categorie: 'SANTE'
-    },
-]
-
 class DrugsCatalog extends Component {
     constructor(props) {
         super(props)
@@ -70,10 +31,20 @@ class DrugsCatalog extends Component {
             selectedFilters : [
                 "MEDICAMENTS"
             ],
-            medicaments: tilesData,
+            medicaments: [],
             snackbarOrdonnance: false,
             snackbarAddToCart: false,
         }
+    }
+
+    componentDidMount() {
+        fetch(`${API_URL}/medicament`, {credentials: 'include'}).then(response => response.json())
+            .then(medicaments => {
+                this.setState({ medicaments })
+            })
+            .catch(error => {
+                console.log('ERROR', error)
+            })
     }
 
     filter = filterName => {
@@ -139,6 +110,7 @@ class DrugsCatalog extends Component {
                 </div>
                 <div>
                     { this.state.selectedFilters.length === 0 && <h1 style={{ color: "red" }}>Aucun filtre séléctionné</h1> }
+                    { this.state.selectedFilters.length !== 0 && this.state.medicaments.filter(medi => this.state.selectedFilters.indexOf(medi.categorie) >= 0).length === 0 && <h1 style={{ color: "red" }}>Aucun médicament répondant aux critères</h1> }
                     <GridList style={styles.gridList} cols={1} cellHeight={220}>
                         {
                             this.state.medicaments.map((medicament) => {
@@ -146,7 +118,7 @@ class DrugsCatalog extends Component {
                                     return <GridTile
                                         key={medicament.imgLink}
                                         title={medicament.nom}
-                                        subtitle={<b style={{ color: "#bae584" }}>{medicament.prix.toFixed(2)}€</b>}
+                                        subtitle={<b style={{ color: "#bae584" }}>{parseInt(medicament.prix).toFixed(2)}€</b>}
                                         actionIcon={
                                             <div style={{display: "flex", alignItems: "center"}}>
                                                 {!medicament.ordonnance && <input type="number" name="quantity" min="1" max="20" defaultValue={1}/>}
