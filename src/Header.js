@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
+import Dialog from 'material-ui/Dialog'
+import Divider from 'material-ui/Divider'
 import ArrowDropDownCircle from 'material-ui-icons/ArrowDropDownCircle'
 import './Header.css'
 import history from './JS/history'
@@ -12,6 +14,14 @@ const profileText = "Modifier mes infos"
 const notifications = "0 Notifications"
 
 class Header extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            panier: [],
+            panierOpen: false,
+        }
+    }
+
     disconnect() {
         fetch(`${API_URL}/logout`, { credentials: 'include' })
             .then(response => {
@@ -23,8 +33,45 @@ class Header extends Component {
             })
     }
 
+    openPanier = () => {
+        fetch(`${API_URL}/cart`, { credentials: 'include'})
+            .then(response => response.json())
+            .then(panier => {
+                this.setState({ panier, panierOpen: true })
+            })
+            .catch(error => {
+                //Open panier anyway, it will show previously fetched products or nothing, but at least it will respond
+                this.setState({ panierOpen: true })
+                console.log('ERROR GETTING CART INFO', error)
+            })
+    }
+
+    closePanier = () => {
+        this.setState({ panierOpen: false })
+    }
+
+    confirmCart = () => {
+        //TODO: call API -> reset state to default
+        alert('Not implemented yet!')
+        this.closePanier() //delete this
+    }
+
     render() {
         const session = this.props.sessionInfo
+        const actions = [
+            <RaisedButton
+                label="Fermer le panier"
+                secondary={true}
+                onClick={this.closePanier}
+            />,
+            <RaisedButton
+                label="Confirmer la commande"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.confirmCart}
+            />,
+        ]
+
         return (
             <div className="headerIndex">
                 <div className="imgContainer">
@@ -47,9 +94,24 @@ class Header extends Component {
                     </div>
                     <div id="actions" className="actions">
                         <RaisedButton className="profileButton" primary={true} label={profileText}/>
+                        <RaisedButton className="cart" primary={true} label="Mon panier" onClick={this.openPanier}/>
                         <RaisedButton className="notificationsButton" secondary={true} onClick={this.disconnect} label={"Déconnexion"}/>
                     </div>
                 </div>
+                <Dialog
+                    title={`Mon Panier (${this.state.panier.length} elements)`}
+                    actions={actions}
+                    open={this.state.panierOpen}
+                    onRequestClose={this.closePanier}
+                >
+                    {
+                        this.state.panier.map(product => <div>
+                            <h2><span>{product.nom}</span><span style={{ float: "right", fontSize: '14px' }}>{parseFloat(product.prix).toFixed(2)}€ x {product.quantite} = <b style={{fontSize: '25px'}}>{parseFloat(product.prix * product.quantite).toFixed(2)}€</b></span></h2>
+                            <Divider/>
+                        </div>)
+                    }
+                    <h1 style={{ float: 'right', marginTop: '30px', marginBottom: '0px' }}>TOTAL: {parseFloat(this.state.panier.reduce((acc, { prix, quantite }) => acc + prix * quantite, 0)).toFixed(2)}€</h1>
+                </Dialog>
             </div>
         )
     }
