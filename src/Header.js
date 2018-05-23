@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Dialog from 'material-ui/Dialog'
 import Divider from 'material-ui/Divider'
 import ArrowDropDownCircle from 'material-ui-icons/ArrowDropDownCircle'
+import RemoveCircle from 'material-ui-icons/RemoveCircle'
 import './Header.css'
 import history from './JS/history'
 
@@ -54,6 +55,21 @@ class Header extends Component {
         //TODO: call API -> reset state to default
         alert('Not implemented yet!')
         this.closePanier() //delete this
+    }
+
+    deleteItemFromCart = productId => {
+        fetch(`${API_URL}/cart/${productId}`, { method: 'DELETE', credentials: 'include'})
+            .then(response => response.json())
+            .then(result => {
+                if (result === 1) {
+                    this.setState({ panier: this.state.panier.filter(el => el.panier_id !== productId) })
+                } else {
+                    console.log('There has been a problem while deleting element from cart, no rows affected')
+                }
+            })
+            .catch(error => {
+                console.log('ERROR DELETING ELEMENT FROM CART', error)
+            })
     }
 
     render() {
@@ -106,7 +122,13 @@ class Header extends Component {
                 >
                     {
                         this.state.panier.map(product => <div>
-                            <h2><span>{product.nom}</span><span style={{ float: "right", fontSize: '14px' }}>{parseFloat(product.prix).toFixed(2)}€ x {product.quantite} = <b style={{fontSize: '25px'}}>{parseFloat(product.prix * product.quantite).toFixed(2)}€</b></span></h2>
+                            <h2>
+                                <RemoveCircle style={{ color: '#cc0000', cursor: 'pointer', marginRight: '8px'}} onClick={() => {this.deleteItemFromCart(product.panier_id)}}/>
+                                <span>{product.nom}</span>
+                                <span style={{ float: "right", fontSize: '14px' }}>{parseFloat(product.prix).toFixed(2)}€ x {product.quantite} =
+                                    <b style={{fontSize: '25px'}}>{parseFloat(product.prix * product.quantite).toFixed(2)}€</b>
+                                </span>
+                            </h2>
                             <Divider/>
                         </div>)
                     }
