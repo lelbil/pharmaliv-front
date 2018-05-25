@@ -52,9 +52,32 @@ class Header extends Component {
     }
 
     confirmCart = () => {
-        //TODO: call API -> reset state to default
-        alert('Not implemented yet!')
-        this.closePanier() //delete this
+        const body = JSON.stringify(this.state.panier)
+
+        fetch(`${API_URL}/order`, {
+            method: 'POST',
+            credentials: 'include',
+            body,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (response.status === 200 ) {
+                this.setState({
+                    panier: [],
+                    panierOpen: false,
+                })
+                //TODO: Why not add a snackbar to say that it was ordered just fine?
+            }
+            else {
+                console.log('GOT UNEXPECTED RESPONSE STATUS CODE WHEN TRYING TO ORDER')
+            }
+        })
+        .catch(error => {
+            console.log("ERROR", error)
+        })
     }
 
     deleteItemFromCart = productId => {
