@@ -40,6 +40,46 @@ class OrdersList extends Component {
         }
     }
 
+    action = (orderId, newEtat) => {
+        //TODO: add a confirmation dialog maybe before proceeding
+        const { target } = this.props
+        const body = {}
+
+        if (target === 'pharmacie' || target === 'livreur') {
+            body.etat = newEtat
+        }
+        else {
+            console.log('Need target to confirm order')
+            return
+        }
+
+        fetch(`${API_URL}/order/${orderId}`, {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(body),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (response.status === 204) {
+                    if (target === 'pharmacie') {
+                        this.setState({ data: this.state.data.filter(el => el.commandeId !== orderId) })
+                    } else if (target === 'livreur') {
+                        this.componentDidMount()
+                    }
+                }
+                else {
+                    console.log('There has been a problem while confirming order from cart, no rows affected')
+                }
+            })
+            .catch(error => {
+                console.log("ERROR", error)
+            })
+
+    }
+
     render() {
         const columns = [{
                 Header: 'Date',
@@ -66,7 +106,7 @@ class OrdersList extends Component {
             },
         ]
         
-        if (this.props.target == "livreur") {
+        if (this.props.target === "livreur") {
             columns.push({
                 Header: 'Pharmacie',
                 accessor: 'pharmacy'
@@ -80,12 +120,51 @@ class OrdersList extends Component {
             columns.push({
                 Header: 'Actions',
                 accessor: 'actions',
-                Cell: () => ( //Todo: pass Order id in props so you can call functions on it
-                    <span>
-                        <RaisedButton label="Confirmer" primary={true}/>
-                        {this.props.target === "pharmacie" && <RaisedButton label="Annuler" secondary={true}/>}
+                Cell: ({ original }) => {
+                    let acceptEtat = null
+                    let declineEtat = null
+                    let acceptLabel = null
+                    let declineLabel = null
+
+                    if (this.props.target === 'pharmacie') {
+                        acceptEtat = 'prepared'
+                        declineEtat = 'rejected'
+                        acceptLabel = 'PRÊT'
+                        declineLabel = 'rejeter'
+                    }
+                    else {
+                        if (original.etat === 'prepared') {
+                            acceptEtat = 'accepted'
+                            acceptLabel = 'Choisir'
+                        }
+                        else if (original.etat === 'accepted' ) {
+                            acceptEtat = 'pickedup'
+                            declineEtat = 'deliveryProblem'
+                            acceptLabel = 'Récupérée'
+                            declineLabel = 'Récupération Impossible'
+                        }
+                        else if (original.etat === 'pickedup') {
+                            acceptEtat = 'delivered'
+                            declineEtat = 'deliveryProblem'
+                            acceptLabel = 'Livré'
+                            declineLabel = 'Problème!'
+                        }
+                    }
+
+                    return <span>
+                        <RaisedButton onClick={() => {
+                            this.action(original.commandeId, acceptEtat)
+                        }} label={acceptLabel || "Confirmer"} primary={true}/>
+                        {
+                            this.props.target === "pharmacie" ||
+                            (
+                                this.props.target === "livreur" && (original.etat === 'accepted' || original.etat === 'pickedup')
+                            ) &&
+                            <RaisedButton onClick={() => {
+                                this.action(original.commandeId, declineEtat)
+                            }} label={ declineLabel || "Annuler" } secondary={true}/>}
                     </span>
-                )
+                }
             })
         }
 
