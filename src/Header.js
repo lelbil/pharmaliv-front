@@ -51,7 +51,7 @@ class Header extends Component {
         this.setState({ panierOpen: false })
     }
 
-    confirmCart = () => {
+    confirmCart = () => {//TODO: should have some sort of redirection to a payment page
         const body = JSON.stringify(this.state.panier)
 
         fetch(`${API_URL}/order`, {

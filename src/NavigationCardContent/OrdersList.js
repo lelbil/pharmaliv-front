@@ -3,8 +3,7 @@ import ReactTable from "react-table";
 import moment from 'moment'
 import "react-table/react-table.css";
 import RaisedButton from 'material-ui/RaisedButton'
-import { tableBGColour } from '../JS/constants'
-
+import { tableBGColour, API_URL } from '../JS/constants'
 
 class OrdersList extends Component {
     constructor(props) {
@@ -14,66 +13,31 @@ class OrdersList extends Component {
         }
     }
 
-    getOrders () {
-        return new Promise((resolve, reject) => {
-            setTimeout(resolve, 100, [
-                {
-                    date:  Date.parse('02-17-2018')/1000,
-                    nom: 'Steven De Carvalho',
-                    address: 'La Tour Eiffel, DA532 - Havana',
-                    details: ['ERZ', 'MERZ', 'ERZ'],
-                    pharmacy: 'Pharmacie de Drogues',
-                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
-                },
-                {
-                    date: Date.parse('02-18-2018')/1000,
-                    nom: 'Steven De Carvalho',
-                    address: 'La Tour Eiffel, DA532 - Havana',
-                    details: 'ERZ',
-                    pharmacy: 'Pharmacie de Drogues',
-                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
-                },
-                {
-                    date:  Date.parse('02-19-2018')/1000,
-                    nom: 'Billel De Attatuch',
-                    address: 'La Tour Eiffel, DA532 - Havana',
-                    details: 'ERZ',
-                    pharmacy: 'Pharmacie de Drogues',
-                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
-                },
-                {
-                    date:  Date.parse('03-31-2018')/1000,
-                    nom: 'Billel De Attatuch',
-                    address: 'La Tour Eiffel, DA532 - Havana',
-                    details: 'ERZ',
-                    pharmacy: 'Pharmacie de Drogues',
-                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
-                },
-                {
-                    date:  Date.parse('02-27-2018')/1000,
-                    nom: 'Steven De Carvalho',
-                    address: 'La Tour Eiffel, DA532 - Havana',
-                    details: 'ERZ',
-                    pharmacy: 'Pharmacie de Drogues',
-                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
-                },
-                {
-                    date:  Date.parse('03-01-2018')/1000,
-                    nom: 'Cristiano Ronaldo',
-                    address: 'La Tour Eiffel, DA532 - Havana',
-                    details: 'ERZ',
-                    pharmacy: 'Pharmacie de Drogues',
-                    pharmacyAddress: 'Rue Marijuana, Havana - Cuba',
-                },
-
-            ])
-        })
-    }
-
     componentDidMount() {
-        this.getOrders().then(
-            data => this.setState({ data })
-        )
+        let etat = null
+        let route = null
+
+        if (this.props.target === 'livreur') {
+            route = 'deliveries'
+            if (this.props.enCours) etat = 'prepared'
+            else etat = 'postorder'
+        } else {
+            route = 'myPharmacyOrders'
+            if (this.props.enCours) etat = 'ordered'
+            else etat = 'postorder'
+        }
+
+        if (route && etat) {
+            fetch(`${API_URL}/${route}/${etat}`, {credentials: 'include'}).then(response => response.json())
+                .then(data => {
+                    this.setState({data})
+                })
+                .catch(error => {
+                    console.log('ERROR', error)
+                })
+        } else {
+            console.log('ERROR FETCHING ORDERS DATA! Can not get one of "etat" and "route"')
+        }
     }
 
     render() {

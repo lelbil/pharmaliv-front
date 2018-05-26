@@ -14,7 +14,7 @@ class OrdersList extends Component {
 
     componentDidMount() {
         fetch(`${API_URL}/mesMedicaments`, {credentials: 'include'}).then(response => response.json())
-            .then(data => {console.log('RECEIVED', data)
+            .then(data => {
                 this.setState({ data })
             })
             .catch(error => {
