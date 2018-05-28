@@ -21,10 +21,13 @@ class OrdersList extends Component {
             route = 'deliveries'
             if (this.props.enCours) etat = 'prepared'
             else etat = 'postorder'
-        } else {
+        } else if (this.props.target === 'pharmacie') {
             route = 'myPharmacyOrders'
             if (this.props.enCours) etat = 'ordered'
             else etat = 'postorder'
+        } else {
+            route = 'mymeds'
+            etat= 'postorder'
         }
 
         if (route && etat) {
@@ -45,7 +48,7 @@ class OrdersList extends Component {
         const { target } = this.props
         const body = {}
 
-        if (target === 'pharmacie' || target === 'livreur') {
+        if (target === 'pharmacie' || target === 'livreur' || target === 'patient') {
             body.etat = newEtat
         }
         else {
@@ -85,12 +88,6 @@ class OrdersList extends Component {
                 Header: 'Date',
                 accessor: 'date',
                 Cell: props => <span>{moment.unix(props.value).format('DD-MM-YYYY')}</span>
-            }, {
-                Header: 'Nom Client',
-                accessor: 'nom',
-            }, {
-                Header: 'Adresse',
-                accessor: 'address',
             },
             {
                 Header: 'Détails',
@@ -105,7 +102,38 @@ class OrdersList extends Component {
                 )
             },
         ]
-        
+
+        const etatMapping = {
+            ['ordered']: 'Confirmée',
+            ['prepared']: 'Prête pour livraison',
+            ['accepted']: 'En attente du livreur',
+            ['pickedup']: 'En chemin',
+            ['delivered']: 'Livrée',
+            ['canceled']: 'Annulée par le client',
+            ['rejected']: 'Réfusé par le pharmacien',
+            ['deliveryProblem']: 'Problème lors de la livraison',
+        }
+
+        if (this.props.target === "patient") {
+            columns.push({
+                Header: 'Pharmacie',
+                accessor: 'pharmacy',
+            }, {
+                Header: 'Adresse de la pharmacie',
+                accessor: 'pharmacyAddress',
+            })
+        }
+
+        if (this.props.target === "pharmacie") {
+            columns.push({
+                Header: 'Nom Client',
+                accessor: 'nom',
+            }, {
+                Header: 'Adresse',
+                    accessor: 'address',
+            })
+        }
+
         if (this.props.target === "livreur") {
             columns.push({
                 Header: 'Pharmacie',
@@ -115,8 +143,15 @@ class OrdersList extends Component {
                 accessor: 'pharmacyAddress'
             })
         }
+        else if (!this.props.enCours) {
+            columns.push({
+                Header: 'État',
+                accessor: 'etat',
+                Cell: ({ value }) => etatMapping[value]
+            })
+        }
 
-        if (this.props.enCours) {
+        if (this.props.enCours || this.props.target === 'patient') {
             columns.push({
                 Header: 'Actions',
                 accessor: 'actions',
@@ -132,7 +167,7 @@ class OrdersList extends Component {
                         acceptLabel = 'PRÊT'
                         declineLabel = 'rejeter'
                     }
-                    else {
+                    else if (this.props.target === 'livreur') {
                         if (original.etat === 'prepared') {
                             acceptEtat = 'accepted'
                             acceptLabel = 'Choisir'
@@ -150,16 +185,22 @@ class OrdersList extends Component {
                             declineLabel = 'Problème!'
                         }
                     }
+                    else if (this.props.target === 'patient') {
+                        declineEtat = 'canceled'
+                        declineLabel = 'Annuler'
+                    }
 
                     return <span>
-                        <RaisedButton onClick={() => {
+                        {this.props.target !== 'patient' && <RaisedButton onClick={() => {
                             this.action(original.commandeId, acceptEtat)
-                        }} label={acceptLabel || "Confirmer"} primary={true}/>
+                        }} label={acceptLabel || "Confirmer"} primary={true}/>}
                         {
-                            this.props.target === "pharmacie" ||
+                            (this.props.target === "pharmacie" ||
+                            (this.props.target === "patient" && (original.etat === 'ordered' || original.etat === 'prepared')) ||
                             (
                                 this.props.target === "livreur" && (original.etat === 'accepted' || original.etat === 'pickedup')
-                            ) &&
+                            ))
+                            &&
                             <RaisedButton onClick={() => {
                                 this.action(original.commandeId, declineEtat)
                             }} label={ declineLabel || "Annuler" } secondary={true}/>}

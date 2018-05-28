@@ -6,11 +6,10 @@ import AddPatient from './AddPatient'
 import IDs from '../JS/ids'
 import AddDrug from "./AddDrug"
 import NewOrder from "./NewOrder"
-import PatientOrdersList from './PatientOrdersList'
 import DrugsCatalog from './DrugsCatalog'
 
 const contentMapping = {
-    [IDs.HISTORIQUE_COMMANDE_PHARMACIE]:  <OrdersList style={{height: "auto", width: "auto"}}/>,
+    [IDs.HISTORIQUE_COMMANDE_PHARMACIE]:  <OrdersList style={{height: "auto", width: "auto"}} target="pharmacie"/>,
     [IDs.COMMANDES_ENCOURS_PHARMACIE]: <OrdersList  style={{height: "auto", width: "auto"}} target="pharmacie" enCours={true} />,
     [IDs.MEDICAMENTS_PHARMACIE]: <DrugList style={{height: "auto", width: "auto"}}/>,
     [IDs.AJOUTER_MEDICAMENT]: <AddDrug style={{height: "auto", width: "auto"}}/>,
@@ -20,7 +19,7 @@ const contentMapping = {
     [IDs.NOUVEAU_PATIENT]: <AddPatient style={{height: "auto", width: "auto"}}/>,
     [IDs.NOUVELLE_COMMANDE_MEDECIN]: <NewOrder style={{height: "auto", width: "auto"}} target="medecin"/>,
 
-    [IDs.MES_COMMANDES_PATIENT]: <PatientOrdersList style={{height: "auto", width: "auto"}}/>,
+    [IDs.MES_COMMANDES_PATIENT]: <OrdersList style={{height: "auto", width: "auto"}} target="patient"/>,
     [IDs.NOUVELLE_COMMANDE_PATIENT]: <NewOrder style={{height: "auto", width: "auto"}} target="patient"/>,
     [IDs.CATALOGUE_MEDICAMENTS]: <DrugsCatalog style={{height: "auto", width: "auto"}}/>,
 
