@@ -33,6 +33,7 @@ class RegisterView extends Component {
             type: null,
             user: '',
             password: '',
+            profilePic: null,
         }
     }
 
@@ -75,6 +76,53 @@ class RegisterView extends Component {
         this.setState({ type })
     }
 
+    handleProfilePic = e => {
+        const file = e.target.files[0]
+
+        this.uploadToS3(file).then(profilePic => {
+            this.setState({
+                profilePic
+            })
+        })
+
+    }
+
+    getSignedRequest = file => {
+        return fetch(`${API_URL}/sign-s3?fileName=${file.name}&fileType=${file.type}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}: ${response.statusText}`)
+                }
+                return response.json()
+            })
+    }
+
+    uploadFile = (file, signedRequest, url) => {
+        const options = {
+            method: 'PUT',
+            body: file,
+        }
+        return fetch(signedRequest, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}: ${response.statusText}`);
+                }
+                return url
+            })
+    }
+
+    uploadToS3 = file => {
+        return this.getSignedRequest(file)
+            .then(json => this.uploadFile(file, json.signedRequest, json.url))
+            .then(url => {
+                return url
+            })
+            .catch(err => {
+                console.error(err)
+                return null
+            })
+    }
+
     render() {
         const { type } = this.state
         return (
@@ -95,7 +143,7 @@ class RegisterView extends Component {
                         <div style={{ display: "flex", flexDirection: "column", margin: "auto", overflow: "scroll"}}>
                             <TextField name="user" onChange={this.change} value={this.state.user} hintText="Nom d'utilisateur"/>
                             <TextField name="password" onChange={this.change} value={this.state.password} hintText="Mot de Passe" type="password"/>
-                            {type === "patientContent" && <div><span>Photo de profil: &nbsp;&nbsp;</span><input type="file" id="profilepic"/></div>}
+                            {type === "patientContent" && <div><span>Photo de profil: &nbsp;&nbsp;</span><input onChange={this.handleProfilePic} type="file" id="profilepic"/></div>}
                             {type !== "pharmacistContent" && <TextField name="fname" onChange={this.change} value={this.state.fname} hintText="Prénom"/> }
                             {type !== "pharmacistContent" && <TextField name="lname" onChange={this.change} value={this.state.lname} hintText="Nom"/> }
                             {type === "pharmacistContent" && <TextField name="pharmaName" onChange={this.change} value={this.state.pharmaName} hintText="Nom de la Pharmacie"/> }

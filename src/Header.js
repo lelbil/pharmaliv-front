@@ -114,7 +114,7 @@ class Header extends Component {
         return (
             <div className="headerIndex">
                 <div className="imgContainer">
-                    <img className="profilePicture" id="profilePicture" alt="c'est toi" src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"/>
+                    <img className="profilePicture" id="profilePicture" alt="c'est toi" src={session.profilePic}/>
                 </div>
                 <div className="infoActions">
                     <div id="basicInfo" className="info">
