@@ -8,11 +8,14 @@ import ArrowDropDownCircle from 'material-ui-icons/ArrowDropDownCircle'
 import RemoveCircle from 'material-ui-icons/RemoveCircle'
 import './Header.css'
 import history from './JS/history'
+import RegisterView from './RegisterView'
 
 import { API_URL } from './JS/constants'
+import { getExactInfo } from './JS/utils'
 
 const profileText = "Modifier mes infos"
-const notifications = "0 Notifications"
+const logout = "Déconnexion"
+const cart = "Mon panier"
 
 class Header extends Component {
     constructor(props) {
@@ -20,6 +23,7 @@ class Header extends Component {
         this.state = {
             panier: [],
             panierOpen: false,
+            modifyMyInfo: false,
         }
     }
 
@@ -47,8 +51,26 @@ class Header extends Component {
             })
     }
 
-    closePanier = () => {
-        this.setState({ panierOpen: false })
+    openModifyMyInfo = () => {
+        fetch(`${API_URL}/info`, { credentials: 'include'})
+            .then(response => response.json())
+            .then(info => {
+                const myInfo = getExactInfo(info)
+
+                this.setState({
+                    modifyMyInfo: true,
+                    myInfo,
+                    userId: info.userId,
+                    userInfoId: info.id,
+                })
+            })
+            .catch(error => {
+                console.log('ERROR GETTING MY INFO', error)
+            })
+    }
+
+    closeDialog = () => {
+        this.setState({ panierOpen: false, modifyMyInfo: false })
     }
 
     confirmCart = () => {//TODO: should have some sort of redirection to a payment page
@@ -101,7 +123,7 @@ class Header extends Component {
             <RaisedButton
                 label="Fermer le panier"
                 secondary={true}
-                onClick={this.closePanier}
+                onClick={this.closeDialog}
             />,
             <RaisedButton
                 label="Confirmer la commande"
@@ -127,21 +149,22 @@ class Header extends Component {
                         <IconMenu
                             iconButtonElement={<ArrowDropDownCircle/>}
                         >
-                            <MenuItem primaryText={profileText}/>
-                            <MenuItem primaryText={notifications}/>
+                            <MenuItem onClick={this.openModifyMyInfo} primaryText={profileText}/>
+                            <MenuItem onClick={this.openPanier} primaryText={cart}/>
+                            <MenuItem onClick={this.disconnect} primaryText={logout}/>
                         </IconMenu>
                     </div>
                     <div id="actions" className="actions">
-                        <RaisedButton className="profileButton" primary={true} label={profileText}/>
-                        <RaisedButton className="cart" primary={true} label="Mon panier" onClick={this.openPanier}/>
-                        <RaisedButton className="notificationsButton" secondary={true} onClick={this.disconnect} label={"Déconnexion"}/>
+                        <RaisedButton className="profileButton" primary={true} label={profileText} onClick={this.openModifyMyInfo}/>
+                        <RaisedButton className="cart" primary={true} label={cart} onClick={this.openPanier}/>
+                        <RaisedButton className="notificationsButton" secondary={true} onClick={this.disconnect} label={logout}/>
                     </div>
                 </div>
                 <Dialog
                     title={`Mon Panier (${this.state.panier.length} elements)`}
                     actions={actions}
                     open={this.state.panierOpen}
-                    onRequestClose={this.closePanier}
+                    onRequestClose={this.closeDialog}
                 >
                     {
                         this.state.panier.map(product => <div>
@@ -156,6 +179,13 @@ class Header extends Component {
                         </div>)
                     }
                     <h1 style={{ float: 'right', marginTop: '30px', marginBottom: '0px' }}>TOTAL: {parseFloat(this.state.panier.reduce((acc, { prix, quantite }) => acc + prix * quantite, 0)).toFixed(2)}€</h1>
+                </Dialog>
+                <Dialog
+                    title='Modifier Mes Infos'
+                    open={this.state.modifyMyInfo}
+                    onRequestClose={this.closeDialog}
+                >
+                    <RegisterView isUpdate={true} type={session.type} info={this.state.myInfo} userId={this.state.userId} userInfoId={this.state.userInfoId} />
                 </Dialog>
             </div>
         )
