@@ -11,6 +11,7 @@ exports.NOUVELLE_COMMANDE_MEDECIN = 'nvlCmdDoc'
 exports.MES_COMMANDES_PATIENT = 'mesCmd'
 exports.NOUVELLE_COMMANDE_PATIENT = 'nvlCmd'
 exports.CATALOGUE_MEDICAMENTS = 'ctlg'
+exports.TROUVER_PHARMACIE_CARTE = 'pharmap'
 
 exports.HISTORIQUE_COMMANDE_LIVREUR = 'histCmd'
 exports.COMMANDES_ENCOURS_LIVREUR = 'liv'
