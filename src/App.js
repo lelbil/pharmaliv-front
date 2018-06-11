@@ -15,7 +15,7 @@ const patientContent = [
     {
         label: "Trouver Une Pharmacie",
         icon: <Place/>,
-        id: "trvPharma",
+        id: IDs.TROUVER_PHARMACIE_CARTE,
     },
     {
         label: "Nouvelle Commande",

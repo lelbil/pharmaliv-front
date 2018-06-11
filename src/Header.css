@@ -39,6 +39,11 @@
     margin-left: 50px;
 }
 
+.cart {
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
 .dropDownActions {
     display: none;
 }
