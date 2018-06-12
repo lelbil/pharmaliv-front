@@ -12,7 +12,7 @@ import history from './JS/history'
 import RegisterView from './RegisterView'
 
 import {API_URL} from './JS/constants'
-import {getExactInfo} from './JS/utils'
+import {getExactInfo, isPropertyTrue} from './JS/utils'
 
 const profileText = "Modifier mes infos"
 const logout = "Déconnexion"
@@ -26,6 +26,7 @@ class Header extends Component {
             panierOpen: false,
             modifyMyInfo: false,
             lu: false,
+            ordonnanceURL: null,
         }
     }
 
@@ -76,7 +77,7 @@ class Header extends Component {
     }
 
     confirmCart = () => {//TODO: should have some sort of redirection to a payment page
-        const body = JSON.stringify(this.state.panier)
+        const body = JSON.stringify(Object.Assing({ ordonnanceURL : this.state.ordonnanceURL }, this.state.panier))
 
         fetch(`${API_URL}/order`, {
             method: 'POST',
@@ -116,6 +117,52 @@ class Header extends Component {
             })
             .catch(error => {
                 console.log('ERROR DELETING ELEMENT FROM CART', error)
+            })
+    }
+
+    handleOrdonnance = e => {
+        const file = e.target.files[0]
+
+        this.uploadToS3(file).then(ordonnanceURL => {
+            this.setState({
+                ordonnanceURL
+            })
+        })
+    }
+
+    getSignedRequest = file => {
+        return fetch(`${API_URL}/sign-s3?fileName=${file.name}&fileType=${file.type}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}: ${response.statusText}`)
+                }
+                return response.json()
+            })
+    }
+
+    uploadFile = (file, signedRequest, url) => {
+        const options = {
+            method: 'PUT',
+            body: file,
+        }
+        return fetch(signedRequest, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}: ${response.statusText}`);
+                }
+                return url
+            })
+    }
+
+    uploadToS3 = file => {
+        return this.getSignedRequest(file)
+            .then(json => this.uploadFile(file, json.signedRequest, json.url))
+            .then(url => {
+                return url
+            })
+            .catch(err => {
+                console.error(err)
+                return null
             })
     }
 
@@ -191,7 +238,8 @@ class Header extends Component {
                     }
                     <h1 style={{float: 'right', marginTop: '30px', marginBottom: '0px'}}>
                         TOTAL: {parseFloat(this.state.panier.reduce((acc, {prix, quantite}) => acc + prix * quantite, 0)).toFixed(2)}€</h1>
-                    <Checkbox checked={this.state.lu} onCheck={() => {this.setState({ lu: !this.state.lu })}} label="Je déclare avoir lu la notice des médicaments à commander!"/>
+                    {isPropertyTrue(this.state.panier, 'ordonnance') && <h4>Ordonnance Obligatoire: <input onChange={this.handleOrdonnance} type="file" id="profilepic"/></h4>}
+                    <Checkbox checked={this.state.lu && (isPropertyTrue(this.state.panier, 'ordonnance') || this.state.ordonnanceURL !== null )} onCheck={() => {this.setState({ lu: !this.state.lu })}} label="Je déclare avoir lu la notice des médicaments à commander!"/>
                 </Dialog>
                 <Dialog
                     title='Modifier Mes Infos'

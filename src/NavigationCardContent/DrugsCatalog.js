@@ -61,36 +61,21 @@ class DrugsCatalog extends Component {
         }
     }
 
-    notAllowedSnackbar = () => {
-        this.setState({
-            snackbarOrdonnance: true,
-        });
-    }
-
-    closeNotAllowedSnackbar = () => {
-        this.setState({
-            snackbarOrdonnance: false,
-        });
-    }
-
-    addToCartSnackbar = () => {
+    addToCartSnackbar = ({ordonnance = false}) => {
         this.setState({
             snackbarAddToCart: true,
+            snackbarOrdonnance: ordonnance,
         });
     }
 
     closeAddToCartSnackbar = () => {
         this.setState({
             snackbarAddToCart: false,
+            snackbarOrdonnance: null,
         });
     }
 
     addToCart = medicament => {
-        if (medicament.ordonnance) {
-            this.notAllowedSnackbar()
-            return
-        }
-
         const body = JSON.stringify({
             quantite: document.getElementById(`quantite${medicament.id}`).value,
             medicamentId: medicament.id,
@@ -106,7 +91,7 @@ class DrugsCatalog extends Component {
             },
         })
             .then(response => {
-                if (response.status === 201) this.addToCartSnackbar()
+                if (response.status === 201) this.addToCartSnackbar({ ordonnance: medicament.ordonnance })
                 else { console.log('ERROR WHILE ADDING ITEM TO CART') }
             })
             .catch(error => {
@@ -141,9 +126,9 @@ class DrugsCatalog extends Component {
                                         subtitle={<b style={{ color: "#bae584" }}>{parseFloat(medicament.prix).toFixed(2)}€</b>}
                                         actionIcon={
                                             <div style={{display: "flex", alignItems: "center"}}>
-                                                {!medicament.ordonnance && <input id={`quantite${medicament.id}`} type="number" name="quantity" min="1" max="20" defaultValue={1}/>}
-                                                <IconButton onClick={() => { this.addToCart(medicament) }} className={medicament.ordonnance ? "ordonnance" : ""}>
-                                                    <AddShoppingCart className={medicament.ordonnance ? "ordonnance" : ""} disabled={true} color={medicament.ordonnance ? "grey" : "green"}/>
+                                                <input id={`quantite${medicament.id}`} type="number" name="quantity" min="1" max="20" defaultValue={1}/>
+                                                <IconButton onClick={() => { this.addToCart(medicament) }}>
+                                                    <AddShoppingCart disabled={true} color="green"/>
                                                 </IconButton>
                                             </div>}
                                     >
@@ -164,7 +149,7 @@ class DrugsCatalog extends Component {
 
                 <Snackbar
                     open={this.state.snackbarAddToCart}
-                    message="Médicament ajouté au panier"
+                    message={`Médicament ajouté au panier ${this.state.snackbarOrdonnance ? '(Ordonnance obligatoire!)' : ''}`}
                     autoHideDuration={2000}
                     onRequestClose={this.closeAddToCartSnackbar}
                 />

@@ -3,6 +3,14 @@ exports.includes = (array, value) => {
     return array.indexOf(value) >= 0
 }
 
+exports.isPropertyTrue = (array, property) => {
+    let element
+    for (element of array) {
+        if (element[property]) return true
+    }
+    return false
+}
+
 /**
  * An alternative way to splice an element out of an array, returning a new array instead of modifying the existing one.
  * Thus respecting functional programming paradigm
