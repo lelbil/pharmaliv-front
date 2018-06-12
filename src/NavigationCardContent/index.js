@@ -21,7 +21,6 @@ const contentMapping = {
     [IDs.NOUVELLE_COMMANDE_MEDECIN]: <NewOrder style={{height: "auto", width: "auto"}} target="medecin"/>,
 
     [IDs.MES_COMMANDES_PATIENT]: <OrdersList style={{height: "auto", width: "auto"}} target="patient"/>,
-    [IDs.NOUVELLE_COMMANDE_PATIENT]: <NewOrder style={{height: "auto", width: "auto"}} target="patient"/>,
     [IDs.CATALOGUE_MEDICAMENTS]: <DrugsCatalog style={{height: "auto", width: "auto"}}/>,
     [IDs.TROUVER_PHARMACIE_CARTE]: <Carte/>,
 

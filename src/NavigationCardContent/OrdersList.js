@@ -3,6 +3,8 @@ import ReactTable from "react-table";
 import moment from 'moment'
 import "react-table/react-table.css";
 import RaisedButton from 'material-ui/RaisedButton'
+import OpenWith from 'material-ui-icons/OpenWith'
+import Dialog from 'material-ui/Dialog'
 import { tableBGColour, API_URL } from '../JS/constants'
 
 class OrdersList extends Component {
@@ -83,6 +85,15 @@ class OrdersList extends Component {
 
     }
 
+    showOrdonnanceDialog = ordonnanceURL => {
+        this.setState({ ordonnanceURL, ordonnanceDialog: true })
+
+    }
+
+    closeDialog = () => {
+        this.setState({ordonnanceDialog: false,})
+    }
+
     render() {
         const columns = [{
                 Header: 'Date',
@@ -130,7 +141,21 @@ class OrdersList extends Component {
                 accessor: 'nom',
             }, {
                 Header: 'Adresse',
-                    accessor: 'address',
+                accessor: 'address',
+            })
+        }
+
+        if (this.props.target === "pharmacie" || this.props.target === "patient") {
+            columns.push({
+                Header: 'Ordonnance',
+                accessor: 'ordonnanceURL',
+                Cell: ({ value }) => {
+                    if (value && value !== '' ) return <OpenWith style={{color: '#0000cc', cursor: 'pointer', marginRight: '8px'}}
+                                  onClick={() => {
+                                      this.showOrdonnanceDialog(value)
+                                  }}/>
+                    else return 'Aucune ordonnance'
+                }
             })
         }
 
@@ -225,6 +250,12 @@ class OrdersList extends Component {
                     rowsText= 'lignes'
                     className="-striped -highlight"
                 />
+                <Dialog
+                    open={this.state.ordonnanceDialog}
+                    onRequestClose={this.closeDialog}
+                >
+                    <img style={{ objectFit: 'cover', height: '-webkit-fill-available' }} src={this.state.ordonnanceURL} alt="Ordonnance"/>
+                </Dialog>
             </div>
         )
     }

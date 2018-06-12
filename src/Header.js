@@ -77,7 +77,7 @@ class Header extends Component {
     }
 
     confirmCart = () => {//TODO: should have some sort of redirection to a payment page
-        const body = JSON.stringify(Object.Assing({ ordonnanceURL : this.state.ordonnanceURL }, this.state.panier))
+        const body = JSON.stringify(Object.assign({ ordonnanceURL : this.state.ordonnanceURL, panier: this.state.panier }))
 
         fetch(`${API_URL}/order`, {
             method: 'POST',
