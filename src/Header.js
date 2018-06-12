@@ -6,6 +6,7 @@ import Dialog from 'material-ui/Dialog'
 import Divider from 'material-ui/Divider'
 import ArrowDropDownCircle from 'material-ui-icons/ArrowDropDownCircle'
 import RemoveCircle from 'material-ui-icons/RemoveCircle'
+import Checkbox from 'material-ui/Checkbox'
 import './Header.css'
 import history from './JS/history'
 import RegisterView from './RegisterView'
@@ -24,6 +25,7 @@ class Header extends Component {
             panier: [],
             panierOpen: false,
             modifyMyInfo: false,
+            lu: false,
         }
     }
 
@@ -130,6 +132,7 @@ class Header extends Component {
                 primary={true}
                 keyboardFocused={true}
                 onClick={this.confirmCart}
+                disabled={!this.state.lu}
             />,
         ]
 
@@ -188,6 +191,7 @@ class Header extends Component {
                     }
                     <h1 style={{float: 'right', marginTop: '30px', marginBottom: '0px'}}>
                         TOTAL: {parseFloat(this.state.panier.reduce((acc, {prix, quantite}) => acc + prix * quantite, 0)).toFixed(2)}€</h1>
+                    <Checkbox checked={this.state.lu} onCheck={() => {this.setState({ lu: !this.state.lu })}} label="Je déclare avoir lu la notice des médicaments à commander!"/>
                 </Dialog>
                 <Dialog
                     title='Modifier Mes Infos'
