@@ -87,11 +87,11 @@ class Header extends Component {
         })
             .then(response => {
                 if (response.status === 200) {
+                    if (this.state.panier.length !== 0) window.open('https://s3.eu-west-3.amazonaws.com/html-statique/pay.html', '_blank')
                     this.setState({
                         panier: [],
                         panierOpen: false,
                     })
-                    //TODO: Why not add a snackbar to say that it was ordered just fine?
                 }
                 else {
                     console.log('GOT UNEXPECTED RESPONSE STATUS CODE WHEN TRYING TO ORDER')
