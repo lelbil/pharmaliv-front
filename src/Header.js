@@ -27,6 +27,7 @@ class Header extends Component {
             modifyMyInfo: false,
             lu: false,
             ordonnanceURL: null,
+            type: 'domicile',
         }
     }
 
@@ -77,7 +78,7 @@ class Header extends Component {
     }
 
     confirmCart = () => {//TODO: should have some sort of redirection to a payment page
-        const body = JSON.stringify(Object.assign({ ordonnanceURL : this.state.ordonnanceURL, panier: this.state.panier }))
+        const body = JSON.stringify({ ordonnanceURL : this.state.ordonnanceURL, type: this.state.type, panier: this.state.panier })
 
         fetch(`${API_URL}/order`, {
             method: 'POST',
@@ -239,6 +240,10 @@ class Header extends Component {
                     <h1 style={{float: 'right', marginTop: '30px', marginBottom: '0px'}}>
                         TOTAL: {parseFloat(this.state.panier.reduce((acc, {prix, quantite}) => acc + prix * quantite, 0)).toFixed(2)}€</h1>
                     {isPropertyTrue(this.state.panier, 'ordonnance') && <h4>Ordonnance Obligatoire: <input onChange={this.handleOrdonnance} type="file" id="profilepic"/></h4>}
+                    <div style={{ display: 'flex' }}>
+                        <Checkbox checked={this.state.type === 'domicile'} onCheck={() => {this.setState({ type: 'domicile' })}} label="Livré à domicile"/>
+                        <Checkbox checked={this.state.type === 'pharmacie'} onCheck={() => {this.setState({ type: 'pharmacie' })}} label="Livré en pharmacie"/>
+                    </div>
                     <Checkbox checked={this.state.lu} onCheck={() => {this.setState({ lu: !this.state.lu })}} label="Je déclare avoir lu la notice des médicaments à commander!"/>
                 </Dialog>
                 <Dialog
