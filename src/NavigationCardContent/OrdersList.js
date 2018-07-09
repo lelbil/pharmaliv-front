@@ -165,11 +165,13 @@ class OrdersList extends Component {
 
         if (this.props.target === "livreur") {
             columns.push({
-                Header: 'Pharmacie',
-                accessor: 'pharmacy'
+                Header: 'Nom',
+                id: 'name',
+                accessor: d => d.etat === 'pickedup'? d.nom : d.pharmacy
             }, {
-                Header: 'Adresse Pharmacie',
-                accessor: 'pharmacyAddress'
+                Header: 'Adresse',
+                id: 'address',
+                accessor: d => d.etat === 'pickedup'? d.patientAddress : d.pharmacyAddress
             })
         }
         else if (!this.props.enCours) {
