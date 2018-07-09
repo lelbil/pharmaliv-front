@@ -156,6 +156,10 @@ class OrdersList extends Component {
                                   }}/>
                     else return 'Aucune ordonnance'
                 }
+            },
+            {
+                Header: 'Modalité',
+                accessor: 'type',
             })
         }
 
