@@ -33,7 +33,7 @@ const deliveryManContent = [
     {
         label: "Carte",
         icon: <Map/>,
-        id: "crt",
+        id: IDs.CARTE_LIVREUR,
     },
     {
         label: "Livraison(s) En Cours",

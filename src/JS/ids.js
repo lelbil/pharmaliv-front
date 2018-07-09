@@ -15,3 +15,4 @@ exports.TROUVER_PHARMACIE_CARTE = 'pharmap'
 
 exports.HISTORIQUE_COMMANDE_LIVREUR = 'histCmd'
 exports.COMMANDES_ENCOURS_LIVREUR = 'liv'
+exports.CARTE_LIVREUR = 'livmap'

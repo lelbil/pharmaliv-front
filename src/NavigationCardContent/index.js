@@ -8,6 +8,7 @@ import AddDrug from "./AddDrug"
 import NewOrder from "./NewOrder"
 import DrugsCatalog from './DrugsCatalog'
 import Carte from './Carte'
+import CarteLivreur from './CarteLivreur'
 
 const contentMapping = {
     [IDs.HISTORIQUE_COMMANDE_PHARMACIE]:  <OrdersList style={{height: "auto", width: "auto"}} target="pharmacie"/>,
@@ -26,7 +27,7 @@ const contentMapping = {
 
     [IDs.HISTORIQUE_COMMANDE_LIVREUR]: <OrdersList style={{height: "auto", width: "auto"}} target="livreur"/>,
     [IDs.COMMANDES_ENCOURS_LIVREUR]: <OrdersList style={{height: "auto", width: "auto"}} target="livreur" enCours={true}/>,
-
+    [IDs.CARTE_LIVREUR]: <CarteLivreur style={{height: "auto", width: "auto"}}/>
 }
 
 export default contentMapping
