@@ -14,11 +14,11 @@ class Carte extends Component {
     componentDidMount() {
         fetch(`${API_URL}/deliveries/prepared`, {credentials: 'include'}).then(response => response.json())
             .then(async result => {
-                console.log('RESULT', result)
                 const promises = []
                 result.forEach(point => {
+                    const address = point.etat === 'pickedup'? point.patientAddress : point.pharmacyAddress
                     promises.push(
-                        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${point.address}&key=${GOOGLE_API_KEY}`)
+                        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GOOGLE_API_KEY}`)
                             .then(response => response.json())
                             .then(result => {
                                 if (result.results && result.results[0] && result.results[0].geometry) return result.results[0].geometry.location
