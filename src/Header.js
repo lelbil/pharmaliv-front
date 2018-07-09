@@ -239,7 +239,7 @@ class Header extends Component {
                     <h1 style={{float: 'right', marginTop: '30px', marginBottom: '0px'}}>
                         TOTAL: {parseFloat(this.state.panier.reduce((acc, {prix, quantite}) => acc + prix * quantite, 0)).toFixed(2)}€</h1>
                     {isPropertyTrue(this.state.panier, 'ordonnance') && <h4>Ordonnance Obligatoire: <input onChange={this.handleOrdonnance} type="file" id="profilepic"/></h4>}
-                    <Checkbox checked={this.state.lu && (isPropertyTrue(this.state.panier, 'ordonnance') || this.state.ordonnanceURL !== null )} onCheck={() => {this.setState({ lu: !this.state.lu })}} label="Je déclare avoir lu la notice des médicaments à commander!"/>
+                    <Checkbox checked={this.state.lu} onCheck={() => {this.setState({ lu: !this.state.lu })}} label="Je déclare avoir lu la notice des médicaments à commander!"/>
                 </Dialog>
                 <Dialog
                     title='Modifier Mes Infos'
