@@ -179,7 +179,7 @@ class Header extends Component {
                 primary={true}
                 keyboardFocused={true}
                 onClick={this.confirmCart}
-                disabled={!this.state.lu}
+                disabled={!this.state.lu || (isPropertyTrue(this.state.panier, 'ordonnance') && this.state.ordonnanceURL == null)}
             />,
         ]
 
