@@ -58,7 +58,6 @@ class RegisterView extends Component {
     }
 
     signup = () => {
-        //TODO: need to add profile picture to the body when I figure out how to handle it
         const body = JSON.stringify(this.state)
 
         fetch(`${API_URL}/signup?userId=${this.props.userId}&userInfoId=${this.props.userInfoId}`, {
