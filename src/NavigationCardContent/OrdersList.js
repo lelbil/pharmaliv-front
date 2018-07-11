@@ -23,11 +23,17 @@ class OrdersList extends Component {
             route = 'deliveries'
             if (this.props.enCours) etat = 'prepared'
             else etat = 'postorder'
-        } else if (this.props.target === 'pharmacie') {
+        }
+        else if (this.props.target === 'pharmacie') {
             route = 'myPharmacyOrders'
             if (this.props.enCours) etat = 'ordered'
             else etat = 'postorder'
-        } else {
+        }
+        else if (this.props.target === 'medecin') {
+            route = 'doctor'
+            etat = 'all'
+        }
+        else {
             route = 'mymeds'
             etat= 'postorder'
         }
@@ -100,18 +106,6 @@ class OrdersList extends Component {
                 accessor: 'date',
                 Cell: props => <span>{moment.unix(props.value).format('DD-MM-YYYY')}</span>
             },
-            {
-                Header: 'Détails',
-                accessor: 'details',
-                Cell: props => (
-                    Array.isArray(props.value) ?
-                        <ol style={{ margin: "0px"}}>
-                            {props.value.map(drug => <li>{drug}</li>)}
-                        </ol>
-                        :
-                        props.value
-                )
-            },
         ]
 
         const etatMapping = {
@@ -123,6 +117,32 @@ class OrdersList extends Component {
             ['canceled']: 'Annulée par le client',
             ['rejected']: 'Réfusé par le pharmacien',
             ['deliveryProblem']: 'Problème lors de la livraison',
+        }
+
+        if (this.props.target !== "medecin") {
+            columns.push({
+                Header: 'Détails',
+                accessor: 'details',
+                Cell: props => (
+                    Array.isArray(props.value) ?
+                        <ol style={{ margin: "0px"}}>
+                            {props.value.map(drug => <li>{drug}</li>)}
+                        </ol>
+                        :
+                        props.value
+                )
+            },)
+        }
+
+        if (this.props.target === "medecin") {
+            columns.push({
+                    Header: 'Pharmacie',
+                    accessor: 'pharmacy',
+                },
+                {
+                    Header: 'Patient',
+                    accessor: 'nom',
+                })
         }
 
         if (this.props.target === "patient") {
@@ -145,7 +165,7 @@ class OrdersList extends Component {
             })
         }
 
-        if (this.props.target === "pharmacie" || this.props.target === "patient") {
+        if (this.props.target !== "livreur") {
             columns.push({
                 Header: 'Ordonnance',
                 accessor: 'ordonnanceURL',
@@ -174,6 +194,7 @@ class OrdersList extends Component {
                 accessor: d => d.etat === 'pickedup'? d.patientAddress : d.pharmacyAddress
             })
         }
+
         else if (!this.props.enCours) {
             columns.push({
                 Header: 'État',
