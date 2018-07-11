@@ -19,7 +19,7 @@ const contentMapping = {
     [IDs.HISTORIQUE_COMMANDE_MEDECIN]: <OrdersList  style={{height: "auto", width: "auto"}} target="medecin"/>,
     [IDs.MES_PATIENTS]: <PatientsList style={{height: "auto", width: "auto"}}/>,
     [IDs.NOUVEAU_PATIENT]: <AddPatient style={{height: "auto", width: "auto"}}/>,
-    [IDs.NOUVELLE_COMMANDE_MEDECIN]: <NewOrder style={{height: "auto", width: "auto"}} target="medecin"/>,
+    [IDs.NOUVELLE_COMMANDE_MEDECIN]: <NewOrder style={{height: "auto", width: "auto"}}/>,
 
     [IDs.MES_COMMANDES_PATIENT]: <OrdersList style={{height: "auto", width: "auto"}} target="patient"/>,
     [IDs.CATALOGUE_MEDICAMENTS]: <DrugsCatalog style={{height: "auto", width: "auto"}}/>,
