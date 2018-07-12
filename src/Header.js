@@ -6,12 +6,13 @@ import Dialog from 'material-ui/Dialog'
 import Divider from 'material-ui/Divider'
 import ArrowDropDownCircle from 'material-ui-icons/ArrowDropDownCircle'
 import RemoveCircle from 'material-ui-icons/RemoveCircle'
+import Checkbox from 'material-ui/Checkbox'
 import './Header.css'
 import history from './JS/history'
 import RegisterView from './RegisterView'
 
 import {API_URL} from './JS/constants'
-import {getExactInfo} from './JS/utils'
+import {getExactInfo, isPropertyTrue} from './JS/utils'
 
 const profileText = "Modifier mes infos"
 const logout = "Déconnexion"
@@ -24,6 +25,9 @@ class Header extends Component {
             panier: [],
             panierOpen: false,
             modifyMyInfo: false,
+            lu: false,
+            ordonnanceURL: null,
+            type: 'domicile',
         }
     }
 
@@ -74,7 +78,7 @@ class Header extends Component {
     }
 
     confirmCart = () => {//TODO: should have some sort of redirection to a payment page
-        const body = JSON.stringify(this.state.panier)
+        const body = JSON.stringify({ ordonnanceURL : this.state.ordonnanceURL, type: this.state.type, panier: this.state.panier })
 
         fetch(`${API_URL}/order`, {
             method: 'POST',
@@ -87,11 +91,11 @@ class Header extends Component {
         })
             .then(response => {
                 if (response.status === 200) {
+                    if (this.state.panier.length !== 0) window.open('https://s3.eu-west-3.amazonaws.com/html-statique/pay.html', '_blank')
                     this.setState({
                         panier: [],
                         panierOpen: false,
                     })
-                    //TODO: Why not add a snackbar to say that it was ordered just fine?
                 }
                 else {
                     console.log('GOT UNEXPECTED RESPONSE STATUS CODE WHEN TRYING TO ORDER')
@@ -117,6 +121,52 @@ class Header extends Component {
             })
     }
 
+    handleOrdonnance = e => {
+        const file = e.target.files[0]
+
+        this.uploadToS3(file).then(ordonnanceURL => {
+            this.setState({
+                ordonnanceURL
+            })
+        })
+    }
+
+    getSignedRequest = file => {
+        return fetch(`${API_URL}/sign-s3?fileName=${file.name}&fileType=${file.type}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}: ${response.statusText}`)
+                }
+                return response.json()
+            })
+    }
+
+    uploadFile = (file, signedRequest, url) => {
+        const options = {
+            method: 'PUT',
+            body: file,
+        }
+        return fetch(signedRequest, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}: ${response.statusText}`);
+                }
+                return url
+            })
+    }
+
+    uploadToS3 = file => {
+        return this.getSignedRequest(file)
+            .then(json => this.uploadFile(file, json.signedRequest, json.url))
+            .then(url => {
+                return url
+            })
+            .catch(err => {
+                console.error(err)
+                return null
+            })
+    }
+
     render() {
         const session = this.props.sessionInfo
         const actions = [
@@ -130,6 +180,7 @@ class Header extends Component {
                 primary={true}
                 keyboardFocused={true}
                 onClick={this.confirmCart}
+                disabled={!this.state.lu || (isPropertyTrue(this.state.panier, 'ordonnance') && this.state.ordonnanceURL == null)}
             />,
         ]
 
@@ -188,6 +239,12 @@ class Header extends Component {
                     }
                     <h1 style={{float: 'right', marginTop: '30px', marginBottom: '0px'}}>
                         TOTAL: {parseFloat(this.state.panier.reduce((acc, {prix, quantite}) => acc + prix * quantite, 0)).toFixed(2)}€</h1>
+                    {isPropertyTrue(this.state.panier, 'ordonnance') && <h4>Ordonnance Obligatoire: <input onChange={this.handleOrdonnance} type="file" id="profilepic"/></h4>}
+                    <div style={{ display: 'flex' }}>
+                        <Checkbox checked={this.state.type === 'domicile'} onCheck={() => {this.setState({ type: 'domicile' })}} label="Livré à domicile"/>
+                        <Checkbox checked={this.state.type === 'pharmacie'} onCheck={() => {this.setState({ type: 'pharmacie' })}} label="Livré en pharmacie"/>
+                    </div>
+                    <Checkbox checked={this.state.lu} onCheck={() => {this.setState({ lu: !this.state.lu })}} label="Je déclare avoir lu la notice des médicaments à commander!"/>
                 </Dialog>
                 <Dialog
                     title='Modifier Mes Infos'

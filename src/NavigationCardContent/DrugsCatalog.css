@@ -46,7 +46,3 @@ ul.filtreContainer {
 .filter:hover {
     background-color: #00a200;
 }
-
-.ordonnance {
-    cursor: not-allowed !important; /*TODO: find a way to force it without needing !important*/
-}

@@ -18,11 +18,6 @@ const patientContent = [
         id: IDs.TROUVER_PHARMACIE_CARTE,
     },
     {
-        label: "Nouvelle Commande",
-        icon: <AddCircle/>,
-        id: IDs.NOUVELLE_COMMANDE_PATIENT,
-    },
-    {
         label: "Explorer Le Catalogue Des Médicaments",
         icon: <LocalPharmacy/>,
         id: IDs.CATALOGUE_MEDICAMENTS,
@@ -38,7 +33,7 @@ const deliveryManContent = [
     {
         label: "Carte",
         icon: <Map/>,
-        id: "crt",
+        id: IDs.CARTE_LIVREUR,
     },
     {
         label: "Livraison(s) En Cours",

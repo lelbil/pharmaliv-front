@@ -3,6 +3,8 @@ import ReactTable from "react-table";
 import moment from 'moment'
 import "react-table/react-table.css";
 import RaisedButton from 'material-ui/RaisedButton'
+import OpenWith from 'material-ui-icons/OpenWith'
+import Dialog from 'material-ui/Dialog'
 import { tableBGColour, API_URL } from '../JS/constants'
 
 class OrdersList extends Component {
@@ -21,11 +23,17 @@ class OrdersList extends Component {
             route = 'deliveries'
             if (this.props.enCours) etat = 'prepared'
             else etat = 'postorder'
-        } else if (this.props.target === 'pharmacie') {
+        }
+        else if (this.props.target === 'pharmacie') {
             route = 'myPharmacyOrders'
             if (this.props.enCours) etat = 'ordered'
             else etat = 'postorder'
-        } else {
+        }
+        else if (this.props.target === 'medecin') {
+            route = 'doctor'
+            etat = 'all'
+        }
+        else {
             route = 'mymeds'
             etat= 'postorder'
         }
@@ -83,23 +91,20 @@ class OrdersList extends Component {
 
     }
 
+    showOrdonnanceDialog = ordonnanceURL => {
+        this.setState({ ordonnanceURL, ordonnanceDialog: true })
+
+    }
+
+    closeDialog = () => {
+        this.setState({ordonnanceDialog: false,})
+    }
+
     render() {
         const columns = [{
                 Header: 'Date',
                 accessor: 'date',
                 Cell: props => <span>{moment.unix(props.value).format('DD-MM-YYYY')}</span>
-            },
-            {
-                Header: 'Détails',
-                accessor: 'details',
-                Cell: props => (
-                    Array.isArray(props.value) ?
-                        <ol style={{ margin: "0px"}}>
-                            {props.value.map(drug => <li>{drug}</li>)}
-                        </ol>
-                        :
-                        props.value
-                )
             },
         ]
 
@@ -112,6 +117,32 @@ class OrdersList extends Component {
             ['canceled']: 'Annulée par le client',
             ['rejected']: 'Réfusé par le pharmacien',
             ['deliveryProblem']: 'Problème lors de la livraison',
+        }
+
+        if (this.props.target !== "medecin") {
+            columns.push({
+                Header: 'Détails',
+                accessor: 'details',
+                Cell: props => (
+                    Array.isArray(props.value) ?
+                        <ol style={{ margin: "0px"}}>
+                            {props.value.map(drug => <li>{drug}</li>)}
+                        </ol>
+                        :
+                        props.value
+                )
+            },)
+        }
+
+        if (this.props.target === "medecin") {
+            columns.push({
+                    Header: 'Pharmacie',
+                    accessor: 'pharmacy',
+                },
+                {
+                    Header: 'Patient',
+                    accessor: 'nom',
+                })
         }
 
         if (this.props.target === "patient") {
@@ -130,19 +161,40 @@ class OrdersList extends Component {
                 accessor: 'nom',
             }, {
                 Header: 'Adresse',
-                    accessor: 'address',
+                accessor: 'address',
+            })
+        }
+
+        if (this.props.target !== "livreur") {
+            columns.push({
+                Header: 'Ordonnance',
+                accessor: 'ordonnanceURL',
+                Cell: ({ value }) => {
+                    if (value && value !== '' ) return <OpenWith style={{color: '#0000cc', cursor: 'pointer', marginRight: '8px'}}
+                                  onClick={() => {
+                                      this.showOrdonnanceDialog(value)
+                                  }}/>
+                    else return 'Aucune ordonnance'
+                }
+            },
+            {
+                Header: 'Modalité',
+                accessor: 'type',
             })
         }
 
         if (this.props.target === "livreur") {
             columns.push({
-                Header: 'Pharmacie',
-                accessor: 'pharmacy'
+                Header: 'Nom',
+                id: 'name',
+                accessor: d => d.etat === 'pickedup'? d.nom : d.pharmacy
             }, {
-                Header: 'Adresse Pharmacie',
-                accessor: 'pharmacyAddress'
+                Header: 'Adresse',
+                id: 'address',
+                accessor: d => d.etat === 'pickedup'? d.patientAddress : d.pharmacyAddress
             })
         }
+
         else if (!this.props.enCours) {
             columns.push({
                 Header: 'État',
@@ -225,6 +277,12 @@ class OrdersList extends Component {
                     rowsText= 'lignes'
                     className="-striped -highlight"
                 />
+                <Dialog
+                    open={this.state.ordonnanceDialog}
+                    onRequestClose={this.closeDialog}
+                >
+                    <img style={{ objectFit: 'cover', height: '-webkit-fill-available' }} src={this.state.ordonnanceURL} alt="Ordonnance"/>
+                </Dialog>
             </div>
         )
     }
